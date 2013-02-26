@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing", "ReallySimpleEventing\ReallySimpleEventing.csproj", "{B46083EB-4F31-4325-BB11-0CCC89187FD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.Test.Unit", "..\ReallySimpleEventing.Test.Unit\ReallySimpleEventing.Test.Unit.csproj", "{648B8A02-BE0F-42D7-878C-A07108E56F72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.Test.Unit", "ReallySimpleEventing.Test.Unit\ReallySimpleEventing.Test.Unit.csproj", "{648B8A02-BE0F-42D7-878C-A07108E56F72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
