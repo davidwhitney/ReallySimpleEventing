@@ -5,7 +5,7 @@ namespace ReallySimpleEventing.Test.Unit
 {
     public abstract class TestHandler<TEventType> : IHandle<TEventType>
     {
-        public static int ExecutionCount { get; private set; }
+        public static int ExecutionCount { get; set; }
 
         public void Handle(TEventType @event)
         {

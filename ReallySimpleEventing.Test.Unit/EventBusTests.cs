@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Diagnostics;
+using NUnit.Framework;
 
 namespace ReallySimpleEventing.Test.Unit
 {
@@ -22,6 +23,27 @@ namespace ReallySimpleEventing.Test.Unit
             _eventBus.Raise(new EventHandledBySingle());
 
             Assert.That(EventHandledBySingleHandler.ExecutionCount, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Raise_RaiseOneMillionTrivialEvents_HandlerExecutedInLessThanTenSeconds()
+        {
+            const int numberOfEventsToRaise = 1000000;
+            const int maxTimeAllowableInSeconds = 10;
+            EventHandledBySingleHandler.ExecutionCount = 0;
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            for (var i = 0; i < numberOfEventsToRaise; i++)
+            {
+                _eventBus.Raise(new EventHandledBySingle());
+            }
+
+            stopWatch.Stop();
+
+            Assert.That(EventHandledBySingleHandler.ExecutionCount, Is.EqualTo(numberOfEventsToRaise));
+            Assert.That(stopWatch.Elapsed.Seconds, Is.LessThan(maxTimeAllowableInSeconds));
         }
 
         public class EventHandledByMultiple { }
