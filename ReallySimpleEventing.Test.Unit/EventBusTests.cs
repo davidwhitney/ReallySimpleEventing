@@ -5,14 +5,16 @@ using ReallySimpleEventing.EventHandling;
 namespace ReallySimpleEventing.Test.Unit
 {
     [TestFixture]
-    public class ReallySimpleEventingTests
+    public class EventBusTests
     {
         [Test]
-        public void AA()
+        public void Raise_HandlerExist_HandlerExecuted()
         {
-            var eventBus = ReallySimpleEventing.CreateRealTimeEventBus();
+            var eventBus = ReallySimpleEventing.CreateEventBus();
             
             eventBus.Raise(new MyEvent());
+
+            Assert.That(MyEventHandler.ExecutionCount, Is.EqualTo(1));
         }
     }
 
@@ -21,21 +23,13 @@ namespace ReallySimpleEventing.Test.Unit
         public string EventData { get { return "hi"; } }
     }
 
-    public class DoSomethingWhenMyEventHappens : IHandle<MyEvent>
+    public class MyEventHandler : IHandle<MyEvent>
     {
+        public static int ExecutionCount { get; private set; }
+
         public void Handle(MyEvent @event)
         {
-        }
-
-        public void OnError(MyEvent @event, Exception ex)
-        {
-        }
-    }
-
-    public class DoSomethingElseWhenMyEventHappens : IHandle<MyEvent>
-    {
-        public void Handle(MyEvent @event)
-        {
+            ExecutionCount++;
         }
 
         public void OnError(MyEvent @event, Exception ex)
