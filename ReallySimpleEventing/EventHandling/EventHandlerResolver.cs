@@ -24,26 +24,12 @@ namespace ReallySimpleEventing.EventHandling
 
         private static List<Type> FindAllHandlersInAppDomain()
         {
-            var handlers = new List<Type>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                var allTypes = assembly.GetTypes();
-
-                foreach (var type in allTypes)
-                {
-                    var interfaces = type.GetInterfaces();
-                    if (!interfaces.Any(x=>x.IsHandler()))
-                    {
-                        continue;
-                    }
-
-                    handlers.Add(type);
-                }
-            }
-
-            return handlers;
+            return (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                    from type in assembly.GetTypes()
+                    let interfaces = type.GetInterfaces()
+                    where interfaces.Any(x => x.IsHandler())
+                    select type).ToList();
         }
-
     }
 
     public static class TypeExtensions
