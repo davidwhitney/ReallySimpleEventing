@@ -6,17 +6,17 @@ namespace ReallySimpleEventing
     public class ReallySimpleEventing
     {
         public static IEventHandlerResolver EventHandlerResolver { get; set; }
-        public static IHandlerExecutionStrategy ExecutionStrategy { get; set; }
+        public static IHandlerActivationStrategy ActivationStrategy { get; set; }
 
         static ReallySimpleEventing()
         {
             EventHandlerResolver = new EventHandlerResolver();
-            ExecutionStrategy = new ActivatorExecution();
+            ActivationStrategy = new ActivatorActivation();
         }
 
         public static IEventBus CreateEventBus(bool async = false)
         {
-            return new EventBus(EventHandlerResolver, ExecutionStrategy, async); 
+            return new EventBus(EventHandlerResolver, ActivationStrategy, async); 
         }
     }
 }

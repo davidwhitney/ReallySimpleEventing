@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivationStrategies\ActivatorExecution.cs" />
-    <Compile Include="ActivationStrategies\DelegatedExecution.cs" />
-    <Compile Include="ActivationStrategies\IHandlerExecutionStrategy.cs" />
+    <Compile Include="ActivationStrategies\ActivatorActivation.cs" />
+    <Compile Include="ActivationStrategies\DelegatedActivation.cs" />
+    <Compile Include="ActivationStrategies\IHandlerActivationStrategy.cs" />
     <Compile Include="ThreadingStrategies\TaskOfT.cs" />
     <Compile Include="EventHandling\IEventHandlerResolver.cs" />
     <Compile Include="IEventBus.cs" />

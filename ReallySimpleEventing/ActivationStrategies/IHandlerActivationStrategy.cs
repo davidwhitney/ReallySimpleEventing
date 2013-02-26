@@ -3,7 +3,7 @@ using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies
 {
-    public interface IHandlerExecutionStrategy
+    public interface IHandlerActivationStrategy
     {
         void ExecuteHandler<TEventType>(Type handlerType, Action<IHandle<TEventType>> unknown);
     }

@@ -7,26 +7,26 @@ namespace ReallySimpleEventing
 {
     public class EventBus : IEventBus
     {
-        private readonly IEventHandlerResolver _handlerResolver;
-        private readonly IHandlerExecutionStrategy _handlerFactory;
+        private readonly IEventHandlerResolver _resolver;
+        private readonly IHandlerActivationStrategy _activator;
         private readonly IHandlerThreadingStrategy _thread;
 
-        public EventBus(IEventHandlerResolver handlerResolver,
-                        IHandlerExecutionStrategy handlerExecution,
+        public EventBus(IEventHandlerResolver resolver,
+                        IHandlerActivationStrategy handlerActivation,
                         bool runAsync = false)
         {
-            _handlerResolver = handlerResolver;
-            _handlerFactory = handlerExecution;
+            _resolver = resolver;
+            _activator = handlerActivation;
             _thread = runAsync ? (IHandlerThreadingStrategy) new TaskOfT() : new CurrentThread();
         }
 
         public void Raise<TEventType>(TEventType @event)
         {
-            var handlerTypes = _handlerResolver.GetHandlersForEvent(@event);
+            var handlerTypes = _resolver.GetHandlersForEvent(@event);
 
             foreach (var t in handlerTypes)
             {
-                _handlerFactory.ExecuteHandler<TEventType>(t, h => _thread.Run(() => Handle(@event, h)));
+                _activator.ExecuteHandler<TEventType>(t, h => _thread.Run(() => Handle(@event, h)));
             }
         }
 

@@ -3,11 +3,11 @@ using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies
 {
-    public class DelegatedExecution : IHandlerExecutionStrategy
+    public class DelegatedActivation : IHandlerActivationStrategy
     {
         private readonly Func<Type, object> _createHandler;
 
-        public DelegatedExecution(Func<Type, object> createHandler)
+        public DelegatedActivation(Func<Type, object> createHandler)
         {
             _createHandler = createHandler;
         }
