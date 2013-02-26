@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.Test.Unit
@@ -22,6 +21,14 @@ namespace ReallySimpleEventing.Test.Unit
     }
 
     public class DoSomethingWhenMyEventHappens : IHandle<MyEvent>
+    {
+        public void Handle(MyEvent @event)
+        {
+            
+        }
+    }
+
+    public class DoSomethingElseWhenMyEventHappens : IHandle<MyEvent>
     {
         public void Handle(MyEvent @event)
         {

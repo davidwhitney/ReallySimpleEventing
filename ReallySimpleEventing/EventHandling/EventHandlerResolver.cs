@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ReallySimpleEventing.EventHandling
 {
-    public class EventHandlerResolver
+    public class EventHandlerResolver : IEventHandlerResolver
     {
         private readonly Lazy<List<Type>> _allHandlers;
         private readonly ConcurrentDictionary<Type, List<Type>> _cache;

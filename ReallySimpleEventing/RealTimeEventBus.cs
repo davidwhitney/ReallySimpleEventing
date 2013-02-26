@@ -1,19 +1,29 @@
-﻿using ReallySimpleEventing.EventHandling;
+﻿using ReallySimpleEventing.ActivationStrategies;
+using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing
 {
     public class RealTimeEventBus : IEventBus
     {
-        private readonly IEventRunner _embeddedEventRunner;
+        private readonly IEventHandlerResolver _handlerResolver;
+        private readonly IHandlerActivationStrategy _handlerActivation;
 
-        public RealTimeEventBus(IEventRunner embeddedEventRunner)
+        public RealTimeEventBus(IEventHandlerResolver handlerResolver, IHandlerActivationStrategy handlerActivation)
         {
-            _embeddedEventRunner = embeddedEventRunner;
+            _handlerResolver = handlerResolver;
+            _handlerActivation = handlerActivation;
         }
 
         public void Raise<TEventType>(TEventType @event)
         {
-            _embeddedEventRunner.ProcessEvent(@event);
+            var handlerTypes = _handlerResolver.GetHandlersForEvent(@event);
+
+            foreach (var type in handlerTypes)
+            {
+                var handler = _handlerActivation.CreateHandlerFor<TEventType>(type);
+
+                handler.Handle(@event);
+            }
         }
     }
 }

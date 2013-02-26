@@ -1,21 +1,22 @@
-﻿using ReallySimpleEventing.EventHandling;
+﻿using ReallySimpleEventing.ActivationStrategies;
+using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing
 {
     public class ReallySimpleEventing
     {
-        public static EventHandlerResolver EventHandlerResolver { get; set; }
-        public static EventRunner EventRunner { get; set; }
+        public static IEventHandlerResolver EventHandlerResolver { get; set; }
+        public static IHandlerActivationStrategy ActivationStrategy { get; set; }
 
         static ReallySimpleEventing()
         {
             EventHandlerResolver = new EventHandlerResolver();
-            EventRunner = new EventRunner(EventHandlerResolver);
+            ActivationStrategy = new ActivatorActivation();
         }
 
         public static IEventBus CreateRealTimeEventBus()
         {
-            return new RealTimeEventBus(EventRunner); 
+            return new RealTimeEventBus(EventHandlerResolver, ActivationStrategy); 
         }
     }
 }
