@@ -1,6 +1,7 @@
 namespace ReallySimpleEventing.EventHandling
 {
-    public interface IHandle<TMessageType>
+    public interface IHandle<in TEventType>
     {
+        void Handle(TEventType @event);
     }
 }

@@ -39,11 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\EventBrokerClient.cs" />
-    <Compile Include="EventHandlerResolution\EventExecutor.cs" />
-    <Compile Include="EventHandlerResolution\EventHandlerResolver.cs" />
-    <Compile Include="EventHandlerResolution\IEventExecutor.cs" />
-    <Compile Include="EventHandlerResolution\TypeToHandlerMapping.cs" />
+    <Compile Include="IEventBus.cs" />
+    <Compile Include="ReallySimpleEventing.cs" />
+    <Compile Include="RealTimeEventBus.cs" />
+    <Compile Include="EventHandling\EventRunner.cs" />
+    <Compile Include="EventHandling\EventHandlerResolver.cs" />
+    <Compile Include="EventHandling\IEventRunner.cs" />
     <Compile Include="EventHandling\IHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
