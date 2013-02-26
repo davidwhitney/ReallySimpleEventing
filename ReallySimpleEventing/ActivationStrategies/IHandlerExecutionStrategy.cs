@@ -5,6 +5,6 @@ namespace ReallySimpleEventing.ActivationStrategies
 {
     public interface IHandlerExecutionStrategy
     {
-        void ExecuteHandler<TEventType>(Type type, Action<IHandle<TEventType>> unknown);
+        void ExecuteHandler<TEventType>(Type handlerType, Action<IHandle<TEventType>> unknown);
     }
 }

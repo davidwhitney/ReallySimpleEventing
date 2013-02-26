@@ -12,9 +12,9 @@ namespace ReallySimpleEventing.ActivationStrategies
             _createHandler = createHandler;
         }
 
-        public void ExecuteHandler<TEventType>(Type type, Action<IHandle<TEventType>> handle)
+        public void ExecuteHandler<TEventType>(Type handlerType, Action<IHandle<TEventType>> handle)
         {
-            var handler = (IHandle<TEventType>)_createHandler(type);
+            var handler = (IHandle<TEventType>)_createHandler(handlerType);
             handle(handler);
         }
     }
