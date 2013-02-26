@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.Test.Unit
@@ -24,7 +25,10 @@ namespace ReallySimpleEventing.Test.Unit
     {
         public void Handle(MyEvent @event)
         {
-            
+        }
+
+        public void OnError(MyEvent @event, Exception ex)
+        {
         }
     }
 
@@ -32,7 +36,10 @@ namespace ReallySimpleEventing.Test.Unit
     {
         public void Handle(MyEvent @event)
         {
-            
+        }
+
+        public void OnError(MyEvent @event, Exception ex)
+        {
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ReallySimpleEventing.ActivationStrategies;
+﻿using System;
+using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing
@@ -22,7 +23,14 @@ namespace ReallySimpleEventing
             {
                 var handler = _handlerActivation.CreateHandlerFor<TEventType>(type);
 
-                handler.Handle(@event);
+                try
+                {
+                    handler.Handle(@event);
+                }
+                catch (Exception ex)
+                {
+                    handler.OnError(@event, ex);
+                }
             }
         }
     }
