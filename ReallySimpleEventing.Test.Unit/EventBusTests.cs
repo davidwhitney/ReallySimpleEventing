@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
-using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.Test.Unit
 {
@@ -24,7 +23,7 @@ namespace ReallySimpleEventing.Test.Unit
         public void Raise_HandlerExist_HandlerExecuted()
         {
             var executionCount = 0;
-            EventHandledBySingleHandler.Callback = () => executionCount++;
+            EventHandledBySingleHandler.OnHandleAction = () => executionCount++;
 
             _eventBus.Raise(new EventHandledBySingle());
 
@@ -37,7 +36,7 @@ namespace ReallySimpleEventing.Test.Unit
             const int numberOfEventsToRaise = 1000000;
             const int maxTimeAllowableInSeconds = 10;
             var executionCount = 0;
-            EventHandledBySingleHandler.Callback = () => executionCount++;
+            EventHandledBySingleHandler.OnHandleAction = () => executionCount++;
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -61,8 +60,7 @@ namespace ReallySimpleEventing.Test.Unit
         public void Raise_MultipleHandlersExist_AllHandlersExecuted()
         {
             var executionCount = 0;
-            EventHandledByMultipleHandler1.Callback = () => executionCount++;
-            EventHandledByMultipleHandler2.Callback = () => executionCount++;
+            TestHandler<EventHandledByMultiple>.OnHandleAction = () => executionCount++;
 
             _eventBus.Raise(new EventHandledByMultiple());
 
@@ -71,18 +69,13 @@ namespace ReallySimpleEventing.Test.Unit
         }
 
         public class EventWhereHandlerIsAsync { }
-        public class AsycHandlerForEventWhereHandlerIsAsync : IHandleAsync<EventWhereHandlerIsAsync>
-        {
-            public static Action Callback { get; set; }
-            public void Handle(EventWhereHandlerIsAsync @event) { Callback(); }
-            public void OnError(EventWhereHandlerIsAsync @event, Exception ex) { }
-        }
+        public class AsycHandlerForEventWhereHandlerIsAsync : TestHandlerAsync<EventWhereHandlerIsAsync> { }
 
         [Test]
         public void Raise_AsyncHandlerExists_HandlerExecuted()
         {
             var called = false;
-            AsycHandlerForEventWhereHandlerIsAsync.Callback = () => called = true;
+            AsycHandlerForEventWhereHandlerIsAsync.OnHandleAction = () => called = true;
 
             _eventBus.Raise(new EventWhereHandlerIsAsync());
 
@@ -91,18 +84,27 @@ namespace ReallySimpleEventing.Test.Unit
         }
 
         public class EventWhereHandlerThrowsOnError { }
-        public class HandlerThatThrowsOnError : IHandle<EventWhereHandlerThrowsOnError>
+        public class DelegatedHandler : TestHandler<EventWhereHandlerThrowsOnError> { }
+
+        [Test]
+        public void Raise_ErrorIsThrownInHandling_NoExceptionsCascade()
         {
-            public void Handle(EventWhereHandlerThrowsOnError @event) { throw new Exception("initial exception"); }
-            public void OnError(EventWhereHandlerThrowsOnError @event, Exception ex) { throw ex; }
+            var initialException = new Exception("initial exception");
+            DelegatedHandler.OnHandleAction = () => { throw initialException; };
+
+            _eventBus.Raise(new EventWhereHandlerThrowsOnError());
         }
 
         [Test]
-        public void Raise_HandledThrowsOnError_HandlerCascadesOriginalException()
+        public void Raise_HandlerExplicitlyThrowsOnError_HandlerCascadesOriginalException()
         {
+            var initialException = new Exception("initial exception");
+            DelegatedHandler.OnHandleAction = () => { throw initialException; };
+            DelegatedHandler.OnErrorAction = e => { throw e; };
+
             var ex = Assert.Throws<Exception>(() => _eventBus.Raise(new EventWhereHandlerThrowsOnError()));
 
-            Assert.That(ex.Message, Is.EqualTo("initial exception"));
+            Assert.That(ex.Message, Is.EqualTo(initialException.Message));
         }
     }
 }
