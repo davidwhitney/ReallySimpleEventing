@@ -22,9 +22,9 @@ namespace ReallySimpleEventing
                 };
         }
 
-        public static IEventBus CreateEventBus()
+        public static IEventStream CreateEventStream()
         {
-            return new EventBus(EventHandlerResolver, ActivationStrategy, ThreadingStrategies.ToArray()); 
+            return new EventStream(EventHandlerResolver, ActivationStrategy, ThreadingStrategies.ToArray()); 
         }
     }
 }

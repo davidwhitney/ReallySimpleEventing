@@ -6,14 +6,14 @@ using NUnit.Framework;
 namespace ReallySimpleEventing.Test.Unit
 {
     [TestFixture]
-    public class EventBusTests
+    public class EventsTests
     {
-        private IEventBus _eventBus;
+        private EventStream _eventStream;
 
         [SetUp]
         public void SetUp()
         {
-            _eventBus = ReallySimpleEventing.CreateEventBus();
+            _eventStream = (EventStream)ReallySimpleEventing.CreateEventStream();
         }
 
         public class EventHandledBySingle {}
@@ -25,7 +25,7 @@ namespace ReallySimpleEventing.Test.Unit
             var executionCount = 0;
             EventHandledBySingleHandler.OnHandleAction = () => executionCount++;
 
-            _eventBus.Raise(new EventHandledBySingle());
+            _eventStream.Raise(new EventHandledBySingle());
 
             Assert.That(executionCount, Is.EqualTo(1));
         }
@@ -43,7 +43,7 @@ namespace ReallySimpleEventing.Test.Unit
 
             for (var i = 0; i < numberOfEventsToRaise; i++)
             {
-                _eventBus.Raise(new EventHandledBySingle());
+                _eventStream.Raise(new EventHandledBySingle());
             }
 
             stopWatch.Stop();
@@ -62,7 +62,7 @@ namespace ReallySimpleEventing.Test.Unit
             var executionCount = 0;
             TestHandler<EventHandledByMultiple>.OnHandleAction = () => executionCount++;
 
-            _eventBus.Raise(new EventHandledByMultiple());
+            _eventStream.Raise(new EventHandledByMultiple());
 
             Assert.That(executionCount, Is.EqualTo(2));
             Assert.That(executionCount, Is.EqualTo(2));
@@ -77,7 +77,7 @@ namespace ReallySimpleEventing.Test.Unit
             var called = false;
             AsycHandlerForEventWhereHandlerIsAsync.OnHandleAction = () => called = true;
 
-            _eventBus.Raise(new EventWhereHandlerIsAsync());
+            _eventStream.Raise(new EventWhereHandlerIsAsync());
 
             Thread.Sleep(100); // Hack to let async callback happen
             Assert.That(called, Is.True);
@@ -92,7 +92,7 @@ namespace ReallySimpleEventing.Test.Unit
             var initialException = new Exception("initial exception");
             DelegatedHandler.OnHandleAction = () => { throw initialException; };
 
-            _eventBus.Raise(new EventWhereHandlerThrowsOnError());
+            _eventStream.Raise(new EventWhereHandlerThrowsOnError());
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace ReallySimpleEventing.Test.Unit
             DelegatedHandler.OnHandleAction = () => { throw initialException; };
             DelegatedHandler.OnErrorAction = e => { throw e; };
 
-            var ex = Assert.Throws<Exception>(() => _eventBus.Raise(new EventWhereHandlerThrowsOnError()));
+            var ex = Assert.Throws<Exception>(() => _eventStream.Raise(new EventWhereHandlerThrowsOnError()));
 
             Assert.That(ex.Message, Is.EqualTo(initialException.Message));
         }

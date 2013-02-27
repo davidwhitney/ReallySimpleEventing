@@ -13,7 +13,12 @@ namespace ReallySimpleEventing.ThreadingStrategies
 
         public void Run(Action operation)
         {
-            Task.Factory.StartNew(operation);
+            RunTask(operation);
+        }
+
+        public Task RunTask(Action operation)
+        {
+            return Task.Factory.StartNew(operation);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ReallySimpleEventing
 {
-    public interface IEventBus
+    public interface IEventStream
     {
         void Raise<TEventType>(TEventType @event);
     }

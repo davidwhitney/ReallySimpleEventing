@@ -46,11 +46,11 @@
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ThreadingStrategies\TaskOfT.cs" />
     <Compile Include="EventHandling\IEventHandlerResolver.cs" />
-    <Compile Include="IEventBus.cs" />
+    <Compile Include="IEventStream.cs" />
     <Compile Include="ThreadingStrategies\CurrentThread.cs" />
     <Compile Include="ThreadingStrategies\IHandlerThreadingStrategy.cs" />
     <Compile Include="ReallySimpleEventing.cs" />
-    <Compile Include="EventBus.cs" />
+    <Compile Include="EventStream.cs" />
     <Compile Include="EventHandling\EventHandlerResolver.cs" />
     <Compile Include="EventHandling\IHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
