@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
 using ReallySimpleEventing.ThreadingStrategies;
@@ -9,12 +11,15 @@ namespace ReallySimpleEventing
     {
         private readonly IEventHandlerResolver _resolver;
         private readonly IHandlerActivationStrategy _activator;
+        private readonly IEnumerable<IHandlerThreadingStrategy> _threadingStrategies;
 
         public EventBus(IEventHandlerResolver resolver,
-                        IHandlerActivationStrategy handlerActivation)
+                        IHandlerActivationStrategy handlerActivation,
+                        IEnumerable<IHandlerThreadingStrategy> threadingStrategies)
         {
             _resolver = resolver;
             _activator = handlerActivation;
+            _threadingStrategies = threadingStrategies;
         }
 
         public void Raise<TEventType>(TEventType @event)
@@ -25,17 +30,10 @@ namespace ReallySimpleEventing
             {
                 _activator.ExecuteHandler<TEventType>(t, handler =>
                     {
-                        var thread = SelectThread(handler);
+                        var thread = _threadingStrategies.First(x => x.Supports(handler));
                         thread.Run(() => Handle(handler, @event));
                     });
             }
-        }
-
-        private static IHandlerThreadingStrategy SelectThread<TEventType>(IHandle<TEventType> handler)
-        {
-            return handler as IHandleAsync<TEventType> != null
-                       ? (IHandlerThreadingStrategy) new TaskOfT()
-                       : new CurrentThread();
         }
 
         private static void Handle<TEventType>(IHandle<TEventType> handler, TEventType @event)

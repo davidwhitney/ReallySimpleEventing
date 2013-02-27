@@ -23,9 +23,12 @@ namespace ReallySimpleEventing.Test.Unit
         [Test]
         public void Raise_HandlerExist_HandlerExecuted()
         {
+            var executionCount = 0;
+            EventHandledBySingleHandler.Callback = () => executionCount++;
+
             _eventBus.Raise(new EventHandledBySingle());
 
-            Assert.That(EventHandledBySingleHandler.ExecutionCount, Is.EqualTo(1));
+            Assert.That(executionCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -33,7 +36,8 @@ namespace ReallySimpleEventing.Test.Unit
         {
             const int numberOfEventsToRaise = 1000000;
             const int maxTimeAllowableInSeconds = 10;
-            EventHandledBySingleHandler.ExecutionCount = 0;
+            var executionCount = 0;
+            EventHandledBySingleHandler.Callback = () => executionCount++;
 
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -45,7 +49,7 @@ namespace ReallySimpleEventing.Test.Unit
 
             stopWatch.Stop();
 
-            Assert.That(EventHandledBySingleHandler.ExecutionCount, Is.EqualTo(numberOfEventsToRaise));
+            Assert.That(executionCount, Is.EqualTo(numberOfEventsToRaise));
             Assert.That(stopWatch.Elapsed.Seconds, Is.LessThan(maxTimeAllowableInSeconds));
         }
 
@@ -56,10 +60,14 @@ namespace ReallySimpleEventing.Test.Unit
         [Test]
         public void Raise_MultipleHandlersExist_AllHandlersExecuted()
         {
+            var executionCount = 0;
+            EventHandledByMultipleHandler1.Callback = () => executionCount++;
+            EventHandledByMultipleHandler2.Callback = () => executionCount++;
+
             _eventBus.Raise(new EventHandledByMultiple());
 
-            Assert.That(EventHandledByMultipleHandler1.ExecutionCount, Is.EqualTo(2));
-            Assert.That(EventHandledByMultipleHandler2.ExecutionCount, Is.EqualTo(2));
+            Assert.That(executionCount, Is.EqualTo(2));
+            Assert.That(executionCount, Is.EqualTo(2));
         }
 
         public class EventWhereHandlerIsAsync { }
@@ -78,7 +86,7 @@ namespace ReallySimpleEventing.Test.Unit
 
             _eventBus.Raise(new EventWhereHandlerIsAsync());
 
-            Thread.Sleep(100); // Hack to let callback happen
+            Thread.Sleep(100); // Hack to let async callback happen
             Assert.That(called, Is.True);
         }
     }
