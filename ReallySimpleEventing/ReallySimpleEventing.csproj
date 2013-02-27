@@ -42,6 +42,8 @@
     <Compile Include="ActivationStrategies\ActivatorActivation.cs" />
     <Compile Include="ActivationStrategies\DelegatedActivation.cs" />
     <Compile Include="ActivationStrategies\IHandlerActivationStrategy.cs" />
+    <Compile Include="EventHandling\IHandleAsync.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="ThreadingStrategies\TaskOfT.cs" />
     <Compile Include="EventHandling\IEventHandlerResolver.cs" />
     <Compile Include="IEventBus.cs" />

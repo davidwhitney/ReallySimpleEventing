@@ -31,21 +31,4 @@ namespace ReallySimpleEventing.EventHandling
                     select type).ToList();
         }
     }
-
-    public static class TypeExtensions
-    {
-        private static readonly Type HandlerType = typeof(IHandle<>);
-
-        public static Type HandledType(this Type type)
-        {
-            var interfaces = type.GetInterfaces();
-            var handlingInterface = interfaces.First(x => x.IsHandler());
-            return handlingInterface.GetGenericArguments()[0];
-        }
-
-        public static bool IsHandler(this Type type)
-        {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == HandlerType;
-        }
-    }
 }

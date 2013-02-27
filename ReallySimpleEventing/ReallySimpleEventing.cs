@@ -14,9 +14,9 @@ namespace ReallySimpleEventing
             ActivationStrategy = new ActivatorActivation();
         }
 
-        public static IEventBus CreateEventBus(bool async = false)
+        public static IEventBus CreateEventBus()
         {
-            return new EventBus(EventHandlerResolver, ActivationStrategy, async); 
+            return new EventBus(EventHandlerResolver, ActivationStrategy); 
         }
     }
 }

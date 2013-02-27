@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using NUnit.Framework;
+using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.Test.Unit
 {
@@ -57,6 +60,26 @@ namespace ReallySimpleEventing.Test.Unit
 
             Assert.That(EventHandledByMultipleHandler1.ExecutionCount, Is.EqualTo(2));
             Assert.That(EventHandledByMultipleHandler2.ExecutionCount, Is.EqualTo(2));
+        }
+
+        public class EventWhereHandlerIsAsync { }
+        public class AsycHandlerForEventWhereHandlerIsAsync : IHandleAsync<EventWhereHandlerIsAsync>
+        {
+            public static Action Callback { get; set; }
+            public void Handle(EventWhereHandlerIsAsync @event) { Callback(); }
+            public void OnError(EventWhereHandlerIsAsync @event, Exception ex) { }
+        }
+
+        [Test]
+        public void Raise_AsyncHandlerExists_HandlerExecuted()
+        {
+            var called = false;
+            AsycHandlerForEventWhereHandlerIsAsync.Callback = () => called = true;
+
+            _eventBus.Raise(new EventWhereHandlerIsAsync());
+
+            Thread.Sleep(100); // Hack to let callback happen
+            Assert.That(called, Is.True);
         }
     }
 }

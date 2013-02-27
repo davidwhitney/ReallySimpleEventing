@@ -9,15 +9,12 @@ namespace ReallySimpleEventing
     {
         private readonly IEventHandlerResolver _resolver;
         private readonly IHandlerActivationStrategy _activator;
-        private readonly IHandlerThreadingStrategy _thread;
 
         public EventBus(IEventHandlerResolver resolver,
-                        IHandlerActivationStrategy handlerActivation,
-                        bool runAsync = false)
+                        IHandlerActivationStrategy handlerActivation)
         {
             _resolver = resolver;
             _activator = handlerActivation;
-            _thread = runAsync ? (IHandlerThreadingStrategy) new TaskOfT() : new CurrentThread();
         }
 
         public void Raise<TEventType>(TEventType @event)
@@ -26,11 +23,22 @@ namespace ReallySimpleEventing
 
             foreach (var t in handlerTypes)
             {
-                _activator.ExecuteHandler<TEventType>(t, h => _thread.Run(() => Handle(@event, h)));
+                _activator.ExecuteHandler<TEventType>(t, handler =>
+                    {
+                        var thread = SelectThread(handler);
+                        thread.Run(() => Handle(handler, @event));
+                    });
             }
         }
 
-        private static void Handle<TEventType>(TEventType @event, IHandle<TEventType> handler)
+        private static IHandlerThreadingStrategy SelectThread<TEventType>(IHandle<TEventType> handler)
+        {
+            return handler as IHandleAsync<TEventType> != null
+                       ? (IHandlerThreadingStrategy) new TaskOfT()
+                       : new CurrentThread();
+        }
+
+        private static void Handle<TEventType>(IHandle<TEventType> handler, TEventType @event)
         {
             try
             {
