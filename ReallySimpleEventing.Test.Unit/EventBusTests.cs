@@ -89,5 +89,20 @@ namespace ReallySimpleEventing.Test.Unit
             Thread.Sleep(100); // Hack to let async callback happen
             Assert.That(called, Is.True);
         }
+
+        public class EventWhereHandlerThrowsOnError { }
+        public class HandlerThatThrowsOnError : IHandle<EventWhereHandlerThrowsOnError>
+        {
+            public void Handle(EventWhereHandlerThrowsOnError @event) { throw new Exception("initial exception"); }
+            public void OnError(EventWhereHandlerThrowsOnError @event, Exception ex) { throw ex; }
+        }
+
+        [Test]
+        public void Raise_HandledThrowsOnError_HandlerCascadesOriginalException()
+        {
+            var ex = Assert.Throws<Exception>(() => _eventBus.Raise(new EventWhereHandlerThrowsOnError()));
+
+            Assert.That(ex.Message, Is.EqualTo("initial exception"));
+        }
     }
 }
