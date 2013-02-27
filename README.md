@@ -40,6 +40,18 @@ An event handler is very simple, it looks like this:
     
 And they can be found anywhere in your appdomain. Obviously, multiple handlers for any given message are supported.
 
+We also support extensibility, you can implement:
+
+* IEventHandlerResolver - to override the handler detection
+* IHandlerActivationStrategy - to hook in IoC containers
+* IHandlerThreadingStrategy - to change the way the handlers are executed
+
+You can configure these things in your bootstrapping code by setting their properties in the type
+
+    ReallySimpleEventing
+    
+Apart from that, a single line IoC binding will get you up and running.
+
 Why Do I Need It?
 =================
 
