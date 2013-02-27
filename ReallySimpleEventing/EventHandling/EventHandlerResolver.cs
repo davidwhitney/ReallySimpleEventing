@@ -10,9 +10,13 @@ namespace ReallySimpleEventing.EventHandling
         private readonly Lazy<List<Type>> _allHandlers;
         private readonly ConcurrentDictionary<Type, List<Type>> _cache;
 
-        public EventHandlerResolver()
+        public EventHandlerResolver() : this(FindAllHandlersInAppDomain)
         {
-            _allHandlers = new Lazy<List<Type>>(FindAllHandlersInAppDomain);
+        }
+
+        public EventHandlerResolver(Func<List<Type>> discoverAllIHandlers)
+        {
+            _allHandlers = new Lazy<List<Type>>(discoverAllIHandlers);
             _cache = new ConcurrentDictionary<Type, List<Type>>();
         }
 
