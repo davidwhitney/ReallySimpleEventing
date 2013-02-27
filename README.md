@@ -93,7 +93,7 @@ Why Would I Want That?
 - Performance => Events can be handled off the main worker thread in web apps
 - Open/Closed Principle => Code is "fixed" when complete, and extension is available by adding new event handlers.
 
-Why Don't I Just Use <Some Enterprise Service Bus>?
+Why Don't I Just Use [Some Enterprise Service Bus]?
 ===================================================
 
 - They're big
