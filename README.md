@@ -101,3 +101,10 @@ Why Don't I Just Use [Some Enterprise Service Bus]?
 - Require different skills for maintainance
 - Often not needed
 
+What This Isn't
+===============
+
+- A resiliant messaging thing
+- EventSourcing
+- CQRS
+- A replayable event log
