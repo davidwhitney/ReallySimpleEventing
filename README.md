@@ -5,7 +5,7 @@ A tiny set of classes that add infrastructure that auto-registers events and eve
 
 The idea is that you bind the type:
 
-  IEventStream 
+    IEventStream 
   
 in your IoC container per request scope (or whatever your unit of work is).
 
@@ -22,6 +22,24 @@ Anywhere in your codebase.
 ReallySimpleEventing will then look for any types that implement IHandle<TTypeName> and execute them all.
 Any types that implement IHandleAsync<TTypeName>() will be executed async.
 
+An event handler is very simple, it looks like this:
+
+    public class TestHandler<TEventType> : IHandle<TEventType>
+    {
+        public void Handle(TEventType @event)
+        {
+            // Do stuff
+        }
+        
+        public void OnError(TEventType @event, Exception ex)
+        {
+            // All exceptions are surpressed by default
+            // If you wish to really blow the stack, re-throw the ex here.
+        }
+    }
+    
+And they can be found anywhere in your appdomain. Obviously, multiple handlers for any given message are supported.
+
 Why Do I Need It?
 =================
 
@@ -29,28 +47,28 @@ Events, Event Sourcing, CQRS, all the rage. But you know what's really nice? Ins
 
 You can turn:
 
-  var customer = new Customer();
-  using(var tx = _session.BeginTransaction())
-  {
-    _session.Save(customer);
-    tx.Commit();
-  }
+    var customer = new Customer();
+    using(var tx = _session.BeginTransaction())
+    {
+      _session.Save(customer);
+      tx.Commit();
+    }
 
-  _searchIndexService.Add(customer);
-  var email = new WelcomeEmail(customer);
-  _welcomeEmailService.Send(email);
-  _someOtherThing.DoStuff();
-  _someOtherOtherThing.DoStuff();
+    _searchIndexService.Add(customer);
+    var email = new WelcomeEmail(customer);
+    _welcomeEmailService.Send(email);
+    _someOtherThing.DoStuff();
+    _someOtherOtherThing.DoStuff();
 
 To:
 
-  var customer = new Customer();
-  using(var tx = _session.BeginTransaction())
-  {
-    _session.Save(customer);
-    tx.Commit();
-  }
-  _events.Raise(new CustomerCreatedEvent());
+    var customer = new Customer();
+    using(var tx = _session.BeginTransaction())
+    {
+      _session.Save(customer);
+      tx.Commit();
+    }
+    _events.Raise(new CustomerCreatedEvent());
   
   
 And have all the event handlers live elsewhere.
