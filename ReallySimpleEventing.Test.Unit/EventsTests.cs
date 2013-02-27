@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
+using ReallySimpleEventing.ActivationStrategies;
+using ReallySimpleEventing.EventHandling;
+using ReallySimpleEventing.ThreadingStrategies;
 
 namespace ReallySimpleEventing.Test.Unit
 {
@@ -105,6 +109,53 @@ namespace ReallySimpleEventing.Test.Unit
             var ex = Assert.Throws<Exception>(() => _eventStream.Raise(new EventWhereHandlerThrowsOnError()));
 
             Assert.That(ex.Message, Is.EqualTo(initialException.Message));
+        }
+
+        [Test]
+        public void Raise_WhenEventFired_StrategyWhichSupportsEventHandlerSelected()
+        {
+            var strategyToSkip = new TestThreadStrategy(false);
+            var strategyToSelect = new TestThreadStrategy(true);
+            var threadStrategies = new List<IHandlerThreadingStrategy> {strategyToSkip, strategyToSelect};
+            var stream = new EventStream(new EventHandlerResolver(), new ActivatorActivation(), threadStrategies);
+
+            stream.Raise(new EventHandledBySingle());
+
+            Assert.That(strategyToSelect.WasExecuted);
+        }
+
+        [Test]
+        public void Raise_MultipleExecutionStrategiesMatch_FirstStrategyWhichSupportsEventHandlerSelected()
+        {
+            var firstMatch = new TestThreadStrategy(true);
+            var secondMatch = new TestThreadStrategy(true);
+            var threadStrategies = new List<IHandlerThreadingStrategy> {firstMatch, secondMatch};
+            var stream = new EventStream(new EventHandlerResolver(), new ActivatorActivation(), threadStrategies);
+
+            stream.Raise(new EventHandledBySingle());
+
+            Assert.That(firstMatch.WasExecuted);
+        }
+    }
+
+    public class TestThreadStrategy : IHandlerThreadingStrategy
+    {
+        private readonly bool _supports;
+        public bool WasExecuted { get; private set; }
+
+        public TestThreadStrategy(bool supports)
+        {
+            _supports = supports;
+        }
+
+        public bool Supports<TEventType>(IHandle<TEventType> handler)
+        {
+            return _supports;
+        }
+
+        public void Run(Action operation)
+        {
+            WasExecuted = true;
         }
     }
 }
