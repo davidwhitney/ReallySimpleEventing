@@ -5,7 +5,9 @@ A tiny set of classes that add infrastructure that auto-registers events and eve
 
 The idea is that you bind the type:
 
-IEventStream in your IoC container per request scope (or whatever your unit of work is).
+  IEventStream 
+  
+in your IoC container per request scope (or whatever your unit of work is).
 
 To the method:
 
