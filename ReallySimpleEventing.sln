@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BAEC18
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.Net40", "ReallySimpleEventing.Net40\ReallySimpleEventing.Net40.csproj", "{D11DA846-04A4-4912-8572-154B3A3D1CCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{648B8A02-BE0F-42D7-878C-A07108E56F72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{648B8A02-BE0F-42D7-878C-A07108E56F72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{648B8A02-BE0F-42D7-878C-A07108E56F72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
