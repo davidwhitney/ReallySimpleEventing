@@ -14,5 +14,7 @@
     <files>
       <file src="ReallySimpleEventing\bin\Release\ReallySimpleEventing.dll" target="lib\net45" />
       <file src="ReallySimpleEventing\bin\Release\ReallySimpleEventing.pdb" target="lib\net45" />
+      <file src="ReallySimpleEventing.net40\bin\Release\ReallySimpleEventing.dll" target="lib\net40" />
+      <file src="ReallySimpleEventing.net40\bin\Release\ReallySimpleEventing.pdb" target="lib\net40" />
     </files> 
 </package>
