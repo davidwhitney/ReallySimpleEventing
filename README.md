@@ -8,6 +8,7 @@ ReallySimpleEventing
 * What This Isn't
 * Configuring My Container
 * Containerless Usage
+* Error Handling
 
 A tiny set of classes that add infrastructure that auto-registers events and event handlers and executes them either on the current thread or async, without any pesky bindings.
 
@@ -45,6 +46,10 @@ An event handler is very simple, it looks like this:
             // If you wish to really blow the stack, re-throw the ex here.
         }
     }
+	
+If you want your handler to execute asynchronously you should instead implement
+
+	IHandleAsync<TEventType> // The methods you need to implement are the same
     
 And they can be found anywhere in your appdomain. Obviously, multiple handlers for any given message are supported.
 
@@ -174,3 +179,16 @@ Anywhere in your codebase to raise events.
 Obviously, due to the use of the static directly, you're going to struggle to unit test the raising of events.
 
 It's worth bearing in mind, that when you don't use a DI container, you're bound the the default "Activator" activation strategy, meaning that any of your event handlers *must* contain a public parameterless contstructor.
+
+Error Handling
+==============
+
+The signature of both IHandle<in TEventType> and IHandleAsync<in TEventType> both contain a method you *must* implement:
+
+	void OnError(TEventType @event, Exception ex);
+
+All unhandled errors are caught and passed to this OnError method of your handler. 
+
+The idea behind this is that no errors should accidentally "blow the stack" and prevent further handlers from executing unless you explicitly choose for them to do so.  If you choose to throw from the OnError, you can do this deliberately, but by default, everything is handled and passed back to the error handler that threw the error to begin with.
+
+All error handlers should be designed to handle or cope with their exceptions. If you throw from the OnError method, subsequent synchronous handlers will not execute. Throwing from the OnError method in an IHandleAsync handler will potentially crash your application in .NET40 (due to the implementation of Task<T> in that version of the framework).
