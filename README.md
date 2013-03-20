@@ -172,3 +172,5 @@ You can basically do this:
 	
 Anywhere in your codebase to raise events. 
 Obviously, due to the use of the static directly, you're going to struggle to unit test the raising of events.
+
+It's worth bearing in mind, that when you don't use a DI container, you're bound the the default "Activator" activation strategy, meaning that any of your event handlers *must* contain a public parameterless contstructor.
