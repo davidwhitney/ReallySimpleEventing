@@ -1,6 +1,14 @@
 ReallySimpleEventing
 ====================
 
+* Intro
+* Why Do I Need It?
+* Why Would I Want That?
+* Why Don't I Just Use [Some Enterprise Service Bus]?
+* What This Isn't
+* Configuring My Container
+* Containerless Usage
+
 A tiny set of classes that add infrastructure that auto-registers events and event handlers and executes them either on the current thread or async, without any pesky bindings.
 
 The idea is that you bind the type:
@@ -108,3 +116,59 @@ What This Isn't
 - EventSourcing
 - CQRS
 - A replayable event log
+
+
+Configuring My Container
+========================
+
+By default, we use an "ActivatorActivation" strategy to create your event handlers.
+What this means it that your event handler must have a public parameterless constructor so that Activator.CreateInstance works.
+
+If you have a DI container, you can either:
+
+* Write your own ActivationStrategy that Implements IHandlerActivationStrategy
+* Use our DelegatedActivation strategy with a Func passed to it's contructor binding to your container.
+
+You can override the ActivationStrategy by doing this in your App_Start / Bootstrapping code
+
+    ReallySimpleEventing.ActivationStrategy = new MyActivationStrategy(); // Your own
+    ReallySimpleEventing.ActivationStrategy = new DelegatedActivation(Kernel.GetService); // Delegated activation
+	
+The constructor for DelegatedActivation takes
+
+	Func<Type, object> createHandler
+
+Which tends to match a lot of containers. If you want to use a particular feature of your DI container during activation (say "scope per handler") you'll need to implement your own ActivationStrategy. Here's a quick example for Ninject...
+
+	public class MyCleverActivationStrategyForNinject : IHandlerActivationStrategy
+    {
+        private readonly IKernel _ninjectKernel;
+
+        public DelegatedActivation(IKernel ninjectKernel)
+        {
+            _ninjectKernel = ninjectKernel;
+        }
+
+        public void ExecuteHandler<TEventType>(Type handlerType, Action<IHandle<TEventType>> handle)
+        {
+			using(var scope = _ninjectKernel.BeginScope())
+			{
+				var handler = (IHandle<TEventType>)scope.GetService(handlerType);
+				handle(handler);
+			}
+        }
+    }
+	
+Containerless Usage
+====================
+
+If you're not using a DI container, you can create the IEventStream where you want to call it.
+
+Creating an EventStream is a cheap operation, as the EventHandlerResolver is statically cached so your handler registrations and the associated reflection will only ever run once. The only expensive operation is the initial static constructor on the ReallySimpleEventing type.
+
+You can basically do this:
+
+	ReallySimpleEventing.CreateEventStream().Raise(new MyEvent());
+	
+Anywhere in your codebase to raise events. 
+Obviously, due to the use of the static directly, you're going to struggle to unit test the raising of events.
