@@ -48,8 +48,8 @@
     <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\IEventHandlerResolver.cs">
       <Link>ActivationStrategies\Activator\IEventHandlerResolver.cs</Link>
     </Compile>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\DelegatedActivation.cs">
-      <Link>ActivationStrategies\DelegatedActivation.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Delegated\DelegatedActivation.cs">
+      <Link>ActivationStrategies\Delegated\DelegatedActivation.cs</Link>
     </Compile>
     <Compile Include="..\ReallySimpleEventing\ActivationStrategies\IHandlerActivationStrategy.cs">
       <Link>ActivationStrategies\IHandlerActivationStrategy.cs</Link>

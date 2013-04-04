@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ReallySimpleEventing.EventHandling;
 
-namespace ReallySimpleEventing.ActivationStrategies
+namespace ReallySimpleEventing.ActivationStrategies.Delegated
 {
     public class DelegatedActivation : IHandlerActivationStrategy
     {
