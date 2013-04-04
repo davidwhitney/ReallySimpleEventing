@@ -39,19 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivationStrategies\ActivatorActivation.cs" />
-    <Compile Include="ActivationStrategies\DelegatedActivation.cs" />
+    <Compile Include="ActivationStrategies\Activator\ActivatorActivation.cs" />
+    <Compile Include="ActivationStrategies\Activator\IEventHandlerResolver.cs" />
+    <Compile Include="ActivationStrategies\Delegated\DelegatedActivation.cs" />
     <Compile Include="ActivationStrategies\IHandlerActivationStrategy.cs" />
     <Compile Include="EventHandling\IHandleAsync.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ThreadingStrategies\TaskOfT.cs" />
-    <Compile Include="EventHandling\IEventHandlerResolver.cs" />
     <Compile Include="IEventStream.cs" />
     <Compile Include="ThreadingStrategies\CurrentThread.cs" />
     <Compile Include="ThreadingStrategies\IHandlerThreadingStrategy.cs" />
     <Compile Include="ReallySimpleEventing.cs" />
     <Compile Include="EventStream.cs" />
-    <Compile Include="EventHandling\EventHandlerResolver.cs" />
+    <Compile Include="ActivationStrategies\Activator\EventHandlerResolver.cs" />
     <Compile Include="EventHandling\IHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
