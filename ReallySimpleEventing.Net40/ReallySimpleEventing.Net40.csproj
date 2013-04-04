@@ -39,20 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\ActivatorActivation.cs">
-      <Link>ActivationStrategies\ActivatorActivation.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\ActivatorActivation.cs">
+      <Link>ActivationStrategies\Activator\ActivatorActivation.cs</Link>
+    </Compile>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\EventHandlerResolver.cs">
+      <Link>ActivationStrategies\Activator\EventHandlerResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\IEventHandlerResolver.cs">
+      <Link>ActivationStrategies\Activator\IEventHandlerResolver.cs</Link>
     </Compile>
     <Compile Include="..\ReallySimpleEventing\ActivationStrategies\DelegatedActivation.cs">
       <Link>ActivationStrategies\DelegatedActivation.cs</Link>
     </Compile>
     <Compile Include="..\ReallySimpleEventing\ActivationStrategies\IHandlerActivationStrategy.cs">
       <Link>ActivationStrategies\IHandlerActivationStrategy.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\EventHandling\EventHandlerResolver.cs">
-      <Link>EventHandling\EventHandlerResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\EventHandling\IEventHandlerResolver.cs">
-      <Link>EventHandling\IEventHandlerResolver.cs</Link>
     </Compile>
     <Compile Include="..\ReallySimpleEventing\EventHandling\IHandle.cs">
       <Link>EventHandling\IHandle.cs</Link>

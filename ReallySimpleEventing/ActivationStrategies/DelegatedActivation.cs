@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies
 {
     public class DelegatedActivation : IHandlerActivationStrategy
     {
-        private readonly Func<Type, object> _createHandler;
+        protected Func<Type, IEnumerable<object>> _createHandler;
 
-        public DelegatedActivation(Func<Type, object> createHandler)
+        public DelegatedActivation(Func<Type, IEnumerable<object>> createHandler)
         {
             _createHandler = createHandler;
         }
 
-        public void ExecuteHandler<TEventType>(Type handlerType, Action<IHandle<TEventType>> handle)
+        public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
         {
-            var handler = (IHandle<TEventType>)_createHandler(handlerType);
-            handle(handler);
+            var handlers = _createHandler(typeof (TEventType));
+            return handlers.Cast<IHandle<TEventType>>();
         }
     }
 }

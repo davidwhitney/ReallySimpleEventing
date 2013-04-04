@@ -1,19 +1,17 @@
 ﻿using System.Collections.Generic;
 using ReallySimpleEventing.ActivationStrategies;
-using ReallySimpleEventing.EventHandling;
+using ReallySimpleEventing.ActivationStrategies.Activator;
 using ReallySimpleEventing.ThreadingStrategies;
 
 namespace ReallySimpleEventing
 {
     public class ReallySimpleEventing
     {
-        public static IEventHandlerResolver EventHandlerResolver { get; set; }
         public static IHandlerActivationStrategy ActivationStrategy { get; set; }
         public static List<IHandlerThreadingStrategy> ThreadingStrategies { get; set; }
 
         static ReallySimpleEventing()
         {
-            EventHandlerResolver = new EventHandlerResolver();
             ActivationStrategy = new ActivatorActivation();
             ThreadingStrategies = new List<IHandlerThreadingStrategy> // Order is important for selection
                 {
@@ -24,7 +22,7 @@ namespace ReallySimpleEventing
 
         public static IEventStream CreateEventStream()
         {
-            return new EventStream(EventHandlerResolver, ActivationStrategy, ThreadingStrategies.ToArray()); 
+            return new EventStream(ActivationStrategy, ThreadingStrategies.ToArray()); 
         }
     }
 }
