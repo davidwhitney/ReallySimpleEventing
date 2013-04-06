@@ -39,47 +39,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\ActivatorActivation.cs">
-      <Link>ActivationStrategies\Activator\ActivatorActivation.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\*.cs">
+      <Link>%(FileName)</Link>
     </Compile>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\EventHandlerResolver.cs">
-      <Link>ActivationStrategies\Activator\EventHandlerResolver.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\*.cs">
+      <Link>ActivationStrategies\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\IEventHandlerResolver.cs">
-      <Link>ActivationStrategies\Activator\IEventHandlerResolver.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\*.cs">
+      <Link>ActivationStrategies\Activator\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Delegated\DelegatedActivation.cs">
-      <Link>ActivationStrategies\Delegated\DelegatedActivation.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Delegated\*.cs">
+      <Link>ActivationStrategies\Delegated\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\IHandlerActivationStrategy.cs">
-      <Link>ActivationStrategies\IHandlerActivationStrategy.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\EventHandling\*.cs">
+      <Link>EventHandling\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\ReallySimpleEventing\EventHandling\IHandle.cs">
-      <Link>EventHandling\IHandle.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\EventHandling\IHandleAsync.cs">
-      <Link>EventHandling\IHandleAsync.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\EventStream.cs">
-      <Link>EventStream.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\IEventStream.cs">
-      <Link>IEventStream.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\ReallySimpleEventing.cs">
-      <Link>ReallySimpleEventing.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\ThreadingStrategies\CurrentThread.cs">
-      <Link>ThreadingStrategies\CurrentThread.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\ThreadingStrategies\IHandlerThreadingStrategy.cs">
-      <Link>ThreadingStrategies\IHandlerThreadingStrategy.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\ThreadingStrategies\TaskOfT.cs">
-      <Link>ThreadingStrategies\TaskOfT.cs</Link>
-    </Compile>
-    <Compile Include="..\ReallySimpleEventing\TypeExtensions.cs">
-      <Link>TypeExtensions.cs</Link>
+    <Compile Include="..\ReallySimpleEventing\ThreadingStrategies\*.cs">
+      <Link>ThreadingStrategies\%(FileName)</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
