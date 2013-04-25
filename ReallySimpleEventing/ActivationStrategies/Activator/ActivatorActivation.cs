@@ -19,9 +19,9 @@ namespace ReallySimpleEventing.ActivationStrategies.Activator
         
         public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
         {
-            var handlerTypes = _eventHandlerResolver.GetHandlerTypesForEvent(typeof (TEventType));
+            var handlers = _eventHandlerResolver.GetHandlerTypesForEvent(typeof (TEventType));
 
-            foreach (var type in handlerTypes)
+            foreach (var type in handlers)
             {
                 yield return (IHandle<TEventType>)System.Activator.CreateInstance(type);
             }
