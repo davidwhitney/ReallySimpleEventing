@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
-using ReallySimpleEventing.ActivationStrategies;
-using ReallySimpleEventing.EventHandling;
+using ReallySimpleEventing.ActivationStrategies.Activator;
 using ReallySimpleEventing.ThreadingStrategies;
 
 namespace ReallySimpleEventing.Test.Unit
@@ -117,7 +116,7 @@ namespace ReallySimpleEventing.Test.Unit
             var strategyToSkip = new TestThreadStrategy(false);
             var strategyToSelect = new TestThreadStrategy(true);
             var threadStrategies = new List<IHandlerThreadingStrategy> {strategyToSkip, strategyToSelect};
-            var stream = new EventStream(new EventHandlerResolver(), new ActivatorActivation(), threadStrategies);
+            var stream = new EventStream(new ActivatorActivation(), threadStrategies);
 
             stream.Raise(new EventHandledBySingle());
 
@@ -130,7 +129,7 @@ namespace ReallySimpleEventing.Test.Unit
             var firstMatch = new TestThreadStrategy(true);
             var secondMatch = new TestThreadStrategy(true);
             var threadStrategies = new List<IHandlerThreadingStrategy> {firstMatch, secondMatch};
-            var stream = new EventStream(new EventHandlerResolver(), new ActivatorActivation(), threadStrategies);
+            var stream = new EventStream(new ActivatorActivation(), threadStrategies);
 
             stream.Raise(new EventHandledBySingle());
 
