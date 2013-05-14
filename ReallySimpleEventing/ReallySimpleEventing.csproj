@@ -41,7 +41,9 @@
   <ItemGroup>
     <Compile Include="ActivationStrategies\Activator\ActivatorActivation.cs" />
     <Compile Include="ActivationStrategies\Activator\IEventHandlerResolver.cs" />
+    <Compile Include="ActivationStrategies\Composed\UnionOfAllActivatorsActivation.cs" />
     <Compile Include="ActivationStrategies\Delegated\DelegatedActivation.cs" />
+    <Compile Include="ActivationStrategies\Composed\FirstViableActivatorActivation.cs" />
     <Compile Include="ActivationStrategies\IHandlerActivationStrategy.cs" />
     <Compile Include="EventHandling\IHandleAsync.cs" />
     <Compile Include="TypeExtensions.cs" />

@@ -10,7 +10,7 @@ using FluentAssertions;
 namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Activator
 {
     [TestFixture]
-    public class DefaultResolverTests
+    public class DefaultActivatorTests
     {
         [Test]
         public void ResolverShouldFindCorrectHandlerTypes_ExactMatch()

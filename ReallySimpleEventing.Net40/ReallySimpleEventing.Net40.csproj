@@ -48,6 +48,9 @@
     <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Activator\*.cs">
       <Link>ActivationStrategies\Activator\%(FileName)</Link>
     </Compile>
+    <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Composed\*.cs">
+      <Link>ActivationStrategies\Composed\%(FileName)</Link>
+    </Compile>
     <Compile Include="..\ReallySimpleEventing\ActivationStrategies\Delegated\*.cs">
       <Link>ActivationStrategies\Delegated\%(FileName)</Link>
     </Compile>
