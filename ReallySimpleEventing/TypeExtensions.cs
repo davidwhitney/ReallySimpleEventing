@@ -8,14 +8,23 @@ namespace ReallySimpleEventing
     {
         private static readonly Type HandlerType = typeof(IHandle<>);
 
-        public static Type HandledType(this Type type)
+        public static bool IsAMessageHandlerFor(this Type handlerType, Type messageType)
         {
-            var interfaces = type.GetInterfaces();
-            var handlingInterface = interfaces.First(IsHandler);
-            return handlingInterface.GetGenericArguments()[0];
+            var handlerInterfaces = handlerType.GetInterfaces().Where(i=>i.IsAMessageHandler());
+
+            foreach (var handlerInterface in handlerInterfaces)
+            {
+                var handledType = handlerInterface.GetGenericArguments()[0];
+                if (handledType.IsAssignableFrom(messageType))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        public static bool IsHandler(this Type type)
+        public static bool IsAMessageHandler(this Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == HandlerType;
         }
