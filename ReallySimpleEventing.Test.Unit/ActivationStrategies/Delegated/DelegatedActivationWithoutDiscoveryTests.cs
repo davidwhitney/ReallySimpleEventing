@@ -9,7 +9,7 @@ using ReallySimpleEventing.EventHandling;
 namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
 {
     [TestFixture]
-    public class DelegatedActivationWitoutDiscoveryTests
+    public class DelegatedActivationWithoutDiscoveryTests
     {
         [Test]
         public void DelegatedActivationShouldCallTheDelegateWithTheCorrectType()
