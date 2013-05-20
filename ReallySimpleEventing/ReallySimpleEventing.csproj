@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivationStrategies\Activator\ActivatorActivation.cs" />
+    <Compile Include="ActivationStrategies\Delegated\DelegatedActivationWithDiscovery.cs" />
     <Compile Include="ActivationStrategies\Delegated\DelegatedActivation.cs" />
     <Compile Include="ActivationStrategies\IEventHandlerResolver.cs" />
     <Compile Include="ActivationStrategies\Composed\UnionOfAllActivatorsActivation.cs" />

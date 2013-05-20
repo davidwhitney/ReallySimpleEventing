@@ -1,29 +1,11 @@
-﻿using System.Collections.Generic;
-using ReallySimpleEventing.EventHandling;
+﻿using ReallySimpleEventing.ActivationStrategies.Delegated;
 
 namespace ReallySimpleEventing.ActivationStrategies.Activator
 {
-    public class ActivatorActivation : IHandlerActivationStrategy
+    public class ActivatorActivation : DelegatedActivationWithDiscovery
     {
-        private readonly IEventHandlerResolver _eventHandlerResolver;
-
-        public ActivatorActivation() : this(new EventHandlerResolver())
+        public ActivatorActivation() : base(System.Activator.CreateInstance)
         {
-        }
-
-        public ActivatorActivation(IEventHandlerResolver eventHandlerResolver)
-        {
-            _eventHandlerResolver = eventHandlerResolver;
-        }
-        
-        public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
-        {
-            var handlers = _eventHandlerResolver.GetHandlerTypesForEvent(typeof (TEventType));
-
-            foreach (var type in handlers)
-            {
-                yield return (IHandle<TEventType>)System.Activator.CreateInstance(type);
-            }
         }
     }
 }

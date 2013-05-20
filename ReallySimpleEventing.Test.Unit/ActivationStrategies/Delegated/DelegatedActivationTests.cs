@@ -23,7 +23,7 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
                 return Enumerable.Empty<object>();
             };
 
-            var activator = new DelegatedActivation(resolver, handler);
+            var activator = new DelegatedActivationWithDiscovery(resolver, handler);
             activator.GetHandlers<SomeMessage>();
         }
 
@@ -32,7 +32,7 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
         {
             var resolver = new EventHandlerResolver(() => new[] { typeof(SomeMessageHandler) }); 
             Func<Type, object> handler = t => new SomeMessageHandler();
-            var activator = new DelegatedActivation(resolver, handler);
+            var activator = new DelegatedActivationWithDiscovery(resolver, handler);
 
             var handlers = activator.GetHandlers<SomeMessage>();
 

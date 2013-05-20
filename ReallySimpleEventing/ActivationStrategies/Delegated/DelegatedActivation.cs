@@ -1,33 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies.Delegated
 {
-    public class DelegatedActivation : IHandlerActivationStrategy
+    [Obsolete("Please use DelegatedActivationWithDiscovery - will be removed in later versions")]
+    public class DelegatedActivation : DelegatedActivationWithDiscovery
     {
-        private readonly IEventHandlerResolver _eventHandlerResolver;
-        private readonly Func<Type, object> _createHandler;
-
         public DelegatedActivation(Func<Type, object> createHandler)
-            :this(new EventHandlerResolver(), createHandler)
+            : base(createHandler)
         {
         }
 
-        public DelegatedActivation(IEventHandlerResolver eventHandlerResolver, Func<Type, object> createHandler)
+        public DelegatedActivation(IEventHandlerResolver eventHandlerResolver,
+                                                Func<Type, object> createHandler)
+            : base(eventHandlerResolver, createHandler)
         {
-            _eventHandlerResolver = eventHandlerResolver;
-            _createHandler = createHandler;
-        }
-
-        public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
-        {
-            var types = _eventHandlerResolver.GetHandlerTypesForEvent(typeof(TEventType));
-
-            foreach (var type in types)
-            {
-                yield return (IHandle<TEventType>)_createHandler(type);
-            }
         }
     }
 }
