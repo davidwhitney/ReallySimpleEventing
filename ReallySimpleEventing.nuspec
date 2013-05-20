@@ -2,14 +2,14 @@
 <package>
   <metadata>
     <id>ReallySimpleEventing</id>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <authors>David Whitney</authors>
     <owners>David Whitney</owners>
     <projectUrl>https://github.com/davidwhitney/ReallySimpleEventing</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A tiny eventing system for adding domain events to your application. Supports running tasks both sync and async. Perfect for keeping code simple, self contained and to the point. Documentation available on GitHub: https://github.com/davidwhitney/ReallySimpleEventing</description>
 	<releaseNotes>
-		1.0.2 adds support for NET40 in addition to NET45
+		1.1 has breaking API changes if you've created your own IHandlerActivationStrategy.
 	</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>eventing esb enterprise-service-bus service-bus messaging events</tags>
