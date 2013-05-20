@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies.Delegated
@@ -24,7 +23,11 @@ namespace ReallySimpleEventing.ActivationStrategies.Delegated
         public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
         {
             var types = _eventHandlerResolver.GetHandlerTypesForEvent(typeof(TEventType));
-            return types.Select(type => _createHandler(type)).OfType<IHandle<TEventType>>().ToList();
+
+            foreach (var type in types)
+            {
+                yield return (IHandle<TEventType>)_createHandler(type);
+            }
         }
     }
 }

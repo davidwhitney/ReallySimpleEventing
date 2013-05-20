@@ -36,6 +36,7 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Activator
             var resolver = new EventHandlerResolver(() => new[] { typeof(ParentPolymorphicMessageHandler), typeof(ChildPolymorphicMessageHandler) });
 
             var handlers = resolver.GetHandlerTypesForEvent(typeof(ParentPolymorphicMessage));
+
             handlers.Count().Should().Be(1);
             handlers.Should().Contain(x => x == typeof(ParentPolymorphicMessageHandler));
             handlers.Should().NotContain(x => x == typeof(ChildPolymorphicMessageHandler));
@@ -47,6 +48,7 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Activator
             var resolver = new EventHandlerResolver(() => new[] { typeof(ParentPolymorphicMessageHandler), typeof(ChildPolymorphicMessageHandler) });
 
             var handlers = resolver.GetHandlerTypesForEvent(typeof(ChildPolymorphicMessage));
+
             handlers.Count().Should().Be(2);
             handlers.Should().Contain(x => x == typeof(ParentPolymorphicMessageHandler));
             handlers.Should().Contain(x => x == typeof(ChildPolymorphicMessageHandler));

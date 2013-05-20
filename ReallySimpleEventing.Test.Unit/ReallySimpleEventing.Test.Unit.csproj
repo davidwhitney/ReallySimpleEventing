@@ -50,7 +50,8 @@
     <Compile Include="ActivationStrategies\Activator\DefaultActivatorTests.cs" />
     <Compile Include="ActivationStrategies\Composed\UnionOfAllActivatorsActivatorTests.cs" />
     <Compile Include="ActivationStrategies\Composed\FirstViableActivatorActivatorTests.cs" />
-    <Compile Include="ActivationStrategies\Delegated\DelegatedActivatorTests.cs" />
+    <Compile Include="ActivationStrategies\Delegated\DelegatedActivationTests.cs" />
+    <Compile Include="ActivationStrategies\Delegated\DelegatedActivationWitoutDiscoveryTests.cs" />
     <Compile Include="EventsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHandler.cs" />
