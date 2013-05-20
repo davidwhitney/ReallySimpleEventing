@@ -8,6 +8,7 @@ ReallySimpleEventing
 * What This Isn't
 * Configuring My Container
 * Containerless Usage
+* Available Activation Strategies
 * Error Handling
 
 A tiny set of classes that add infrastructure that auto-registers events and event handlers and executes them either on the current thread or async, without any pesky bindings.
@@ -132,14 +133,14 @@ What this means it that your event handler must have a public parameterless cons
 If you have a DI container, you can either:
 
 * Write your own ActivationStrategy that Implements IHandlerActivationStrategy
-* Use our DelegatedActivation strategy with a Func passed to it's contructor binding to your container.
+* Use our DelegatedActivationWithDiscovery strategy with a Func passed to it's contructor binding to your container.
 
 You can override the ActivationStrategy by doing this in your App_Start / Bootstrapping code
 
     ReallySimpleEventing.ActivationStrategy = new MyActivationStrategy(); // Your own
-    ReallySimpleEventing.ActivationStrategy = new DelegatedActivation(Kernel.GetService); // Delegated activation
+    ReallySimpleEventing.ActivationStrategy = new DelegatedActivationWithDiscovery(Kernel.GetService); // Delegated activation
 	
-The constructor for DelegatedActivation takes
+The constructor for DelegatedActivationWithDiscovery takes
 
 	Func<Type, object> createHandler
 
@@ -149,17 +150,19 @@ Which tends to match a lot of containers. If you want to use a particular featur
     {
         private readonly IKernel _ninjectKernel;
 
-        public DelegatedActivation(IKernel ninjectKernel)
+        public MyCleverActivationStrategyForNinject(IKernel ninjectKernel)
         {
             _ninjectKernel = ninjectKernel;
         }
 
-        public void ExecuteHandler<TEventType>(Type handlerType, Action<IHandle<TEventType>> handle)
+        public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
         {
 			using(var scope = _ninjectKernel.BeginScope())
 			{
 				var handler = (IHandle<TEventType>)scope.GetService(handlerType);
-				handle(handler);
+				var lst = new List<IHandle<TEventType>>();
+				lst.AddRange(handler);
+				return lst;
 			}
         }
     }
@@ -179,6 +182,16 @@ Anywhere in your codebase to raise events.
 Obviously, due to the use of the static directly, you're going to struggle to unit test the raising of events.
 
 It's worth bearing in mind, that when you don't use a DI container, you're bound the the default "Activator" activation strategy, meaning that any of your event handlers *must* contain a public parameterless contstructor.
+
+Available Activation Strategies
+===============================
+
+* Activator/ActivatorActivation (Default) - Finds all handlers, caches their types, activates them using Activator.CreateInstance();
+* Composed/FirstViableActivatorActivation - Constructed with a collection of IHandlerActivationStrategy. Uses the first thing that returns valid handlers
+* Composed/UnionOfAllActivatorsActivation - Constructed with a collection of IHandlerActivationStrategy. Returns all handlers from all strategies
+* Delegated/DelegatedActivation (Obsolete) - V.1 Default
+* Delegated/DelegatedActivationWithDiscovery - Backwards compatible - allows you to override IHandler instantiation while keeping discovery
+* Delegated/DelegatedActivationWithoutDiscovery - Pure delegation for containers - IHandler discovery and instantiation left to the implementor
 
 Error Handling
 ==============
