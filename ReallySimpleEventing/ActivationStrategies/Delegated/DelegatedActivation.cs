@@ -7,17 +7,24 @@ namespace ReallySimpleEventing.ActivationStrategies.Delegated
 {
     public class DelegatedActivation : IHandlerActivationStrategy
     {
-        protected Func<Type, IEnumerable<object>> CreateHandler;
+        private readonly IEventHandlerResolver _eventHandlerResolver;
+        private readonly Func<Type, object> _createHandler;
 
-        public DelegatedActivation(Func<Type, IEnumerable<object>> createHandler)
+        public DelegatedActivation(Func<Type, object> createHandler)
+            :this(new EventHandlerResolver(), createHandler)
         {
-            CreateHandler = createHandler;
+        }
+
+        public DelegatedActivation(IEventHandlerResolver eventHandlerResolver, Func<Type, object> createHandler)
+        {
+            _eventHandlerResolver = eventHandlerResolver;
+            _createHandler = createHandler;
         }
 
         public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
         {
-            var handlers = CreateHandler(typeof (TEventType));
-            return handlers.Cast<IHandle<TEventType>>();
+            var types = _eventHandlerResolver.GetHandlerTypesForEvent(typeof(TEventType));
+            return types.Select(type => _createHandler(type)).OfType<IHandle<TEventType>>().ToList();
         }
     }
 }

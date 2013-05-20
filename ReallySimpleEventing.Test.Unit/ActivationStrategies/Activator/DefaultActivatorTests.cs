@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using ReallySimpleEventing.ActivationStrategies.Activator;
+using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
 
 using FluentAssertions;

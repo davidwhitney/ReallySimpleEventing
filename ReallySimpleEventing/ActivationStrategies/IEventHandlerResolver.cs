@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReallySimpleEventing.ActivationStrategies.Activator
+namespace ReallySimpleEventing.ActivationStrategies
 {
     public interface IEventHandlerResolver
     {
