@@ -22,19 +22,9 @@ namespace ReallySimpleEventing.ActivationStrategies.Activator
 
         public IEnumerable<Type> GetHandlerTypesForEvent(Type eventType)
         {
-            return _cache.GetOrAdd(eventType,
-                                   unused =>
-                                       {
-                                           var types = new List<Type>();
-                                           foreach (var handlerType in _allHandlers.Value)
-                                           {
-                                               if (handlerType.IsAMessageHandlerFor(eventType))
-                                               {
-                                                   types.Add(handlerType);
-                                               }
-                                           }
-                                           return types;
-                                       });
+            return _cache.GetOrAdd(eventType, unused =>
+                                              _allHandlers.Value.Where(
+                                                  handlerType => handlerType.IsAMessageHandlerFor(eventType)).ToList());
         }
 
         private static List<Type> FindAllHandlersInAppDomain()

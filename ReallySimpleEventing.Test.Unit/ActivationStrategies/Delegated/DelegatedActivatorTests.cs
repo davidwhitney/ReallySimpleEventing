@@ -14,7 +14,6 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
         [Test]
         public void DelegatedActivationShouldCallTheDelegateWithTheCorrectType()
         {
-            bool called = false;
             Func<Type, IEnumerable<object>> handler = t =>
             {
                 t.Should().Be<SomeMessage>();
@@ -28,11 +27,11 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
         [Test]
         public void DelegatedActivationShouldReturnTheInstantiatedType()
         {
-            bool called = false;
             Func<Type, IEnumerable<object>> handler = t => new []{new SomeMessageHandler()};
 
             var activator = new DelegatedActivation(handler);
             var handlers = activator.GetHandlers<SomeMessage>();
+
             handlers.Count().Should().Be(1);
             handlers.First().Should().BeOfType<SomeMessageHandler>();
         }

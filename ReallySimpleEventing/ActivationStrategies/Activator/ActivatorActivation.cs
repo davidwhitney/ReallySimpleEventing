@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies.Activator
 {
     public class ActivatorActivation : IHandlerActivationStrategy
     {
-        private IEventHandlerResolver _eventHandlerResolver;
+        private readonly IEventHandlerResolver _eventHandlerResolver;
 
         public ActivatorActivation() : this(new EventHandlerResolver())
-        {}
+        {
+        }
 
         public ActivatorActivation(IEventHandlerResolver eventHandlerResolver)
         {

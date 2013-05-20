@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ReallySimpleEventing.ActivationStrategies;
-using ReallySimpleEventing.ActivationStrategies.Activator;
 using ReallySimpleEventing.EventHandling;
 using ReallySimpleEventing.ThreadingStrategies;
 
@@ -13,8 +12,8 @@ namespace ReallySimpleEventing
         private readonly IHandlerActivationStrategy _activator;
         private readonly IEnumerable<IHandlerThreadingStrategy> _threadingStrategies;
 
-        public EventStream( IHandlerActivationStrategy handlerActivation,
-                            IEnumerable<IHandlerThreadingStrategy> threadingStrategies)
+        public EventStream(IHandlerActivationStrategy handlerActivation,
+                           IEnumerable<IHandlerThreadingStrategy> threadingStrategies)
         {
             _activator = handlerActivation;
             _threadingStrategies = threadingStrategies;

@@ -7,16 +7,16 @@ namespace ReallySimpleEventing.ActivationStrategies.Delegated
 {
     public class DelegatedActivation : IHandlerActivationStrategy
     {
-        protected Func<Type, IEnumerable<object>> _createHandler;
+        protected Func<Type, IEnumerable<object>> CreateHandler;
 
         public DelegatedActivation(Func<Type, IEnumerable<object>> createHandler)
         {
-            _createHandler = createHandler;
+            CreateHandler = createHandler;
         }
 
         public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
         {
-            var handlers = _createHandler(typeof (TEventType));
+            var handlers = CreateHandler(typeof (TEventType));
             return handlers.Cast<IHandle<TEventType>>();
         }
     }
