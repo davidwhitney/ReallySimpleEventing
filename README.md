@@ -212,4 +212,5 @@ Contributors
 
 * Jon Bates
 * Simon Fenton
+* Bala Iyer
 * David Whitney
