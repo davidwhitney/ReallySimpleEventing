@@ -210,6 +210,6 @@ All error handlers should be designed to handle or cope with their exceptions. I
 Contributors
 =======
 
-Jon Bates
-Simon Fenton
-David Whitney
+* Jon Bates
+* Simon Fenton
+* David Whitney
