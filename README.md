@@ -10,6 +10,7 @@ ReallySimpleEventing
 * Containerless Usage
 * Available Activation Strategies
 * Error Handling
+* Contributors
 
 A tiny set of classes that add infrastructure that auto-registers events and event handlers and executes them either on the current thread or async, without any pesky bindings.
 
@@ -205,3 +206,10 @@ All unhandled errors are caught and passed to this OnError method of your handle
 The idea behind this is that no errors should accidentally "blow the stack" and prevent further handlers from executing unless you explicitly choose for them to do so.  If you choose to throw from the OnError, you can do this deliberately, but by default, everything is handled and passed back to the error handler that threw the error to begin with.
 
 All error handlers should be designed to handle or cope with their exceptions. If you throw from the OnError method, subsequent synchronous handlers will not execute. Throwing from the OnError method in an IHandleAsync handler will potentially crash your application in .NET40 (due to the implementation of Task<T> in that version of the framework).
+
+Contributors
+=======
+
+Jon Bates
+Simon Fenton
+David Whitney
