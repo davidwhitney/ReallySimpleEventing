@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.ActivationStrategies.Activator;
 using ReallySimpleEventing.ThreadingStrategies;
@@ -9,6 +10,7 @@ namespace ReallySimpleEventing
     {
         public static IHandlerActivationStrategy ActivationStrategy { get; set; }
         public static List<IHandlerThreadingStrategy> ThreadingStrategies { get; set; }
+        public static Action<object, Exception> WhenErrorsAreNotHandled { get; set; }
 
         static ReallySimpleEventing()
         {
@@ -18,11 +20,13 @@ namespace ReallySimpleEventing
                     new TaskOfT(),
                     new CurrentThread() // Default
                 };
+
+            WhenErrorsAreNotHandled = ((obj, ex) => { throw ex; });
         }
 
         public static IEventStream CreateEventStream()
         {
-            return new EventStream(ActivationStrategy, ThreadingStrategies.ToArray()); 
+            return new EventStream(ActivationStrategy, ThreadingStrategies.ToArray(), WhenErrorsAreNotHandled); 
         }
     }
 }

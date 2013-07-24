@@ -9,24 +9,27 @@ namespace ReallySimpleEventing
 {
     public class EventStream : IEventStream
     {
-        private readonly IHandlerActivationStrategy _activator;
+        private readonly IHandlerActivationStrategy _handlerActivation;
         private readonly IEnumerable<IHandlerThreadingStrategy> _threadingStrategies;
+        private readonly Action<object, Exception> _globalErrorHandler;
 
         public EventStream(IHandlerActivationStrategy handlerActivation,
-                           IEnumerable<IHandlerThreadingStrategy> threadingStrategies)
+                           IEnumerable<IHandlerThreadingStrategy> threadingStrategies,
+                           Action<object, Exception> globalErrorHandler = null)
         {
-            _activator = handlerActivation;
+            _handlerActivation = handlerActivation;
             _threadingStrategies = threadingStrategies;
+            _globalErrorHandler = globalErrorHandler ?? ((obj, ex) => { throw ex; });
         }
 
         public void Raise<TEventType>(TEventType @event)
         {
-            var handlers = _activator.GetHandlers<TEventType>();
+            var handlers = _handlerActivation.GetHandlers<TEventType>();
 
             foreach (var handler in handlers)
             {
                 var threadingStrategy = SelectExecutionContext(handler);
-                threadingStrategy.Run(() => SafelyHandle(handler, @event));
+                threadingStrategy.Run(() => SafelyHandle(handler, @event, _handlerActivation));
             }
         }
 
@@ -35,7 +38,8 @@ namespace ReallySimpleEventing
             return _threadingStrategies.First(x => x.Supports(handler));
         }
 
-        private static void SafelyHandle<TEventType>(IHandle<TEventType> handler, TEventType @event)
+        private void SafelyHandle<TEventType>(IHandle<TEventType> handler, TEventType @event,
+            IHandlerActivationStrategy handlerActivation)
         {
             try
             {
@@ -43,7 +47,12 @@ namespace ReallySimpleEventing
             }
             catch (Exception ex)
             {
-                handler.OnError(@event, ex);
+                try { handler.OnError(@event, ex); }
+                catch (Exception unhandled) { _globalErrorHandler(@event, unhandled); }
+            }
+            finally
+            {
+                handlerActivation.OnHandlerExecuted(handler);
             }
         }
     }

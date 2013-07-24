@@ -33,5 +33,9 @@ namespace ReallySimpleEventing.ActivationStrategies.Composed
 
             return result.Values;
         }
+
+        public virtual void OnHandlerExecuted<TEventType>(IHandle<TEventType> handler)
+        {
+        }
     }
 }

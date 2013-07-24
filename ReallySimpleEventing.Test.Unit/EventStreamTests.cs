@@ -9,13 +9,14 @@ using ReallySimpleEventing.ThreadingStrategies;
 namespace ReallySimpleEventing.Test.Unit
 {
     [TestFixture]
-    public class EventsTests
+    public class EventStreamTests
     {
         private EventStream _eventStream;
 
         [SetUp]
         public void SetUp()
         {
+            ReallySimpleEventing.WhenErrorsAreNotHandled = (o, exception) => { throw exception; };
             _eventStream = (EventStream)ReallySimpleEventing.CreateEventStream();
         }
 
@@ -24,7 +25,7 @@ namespace ReallySimpleEventing.Test.Unit
 
         [Test]
         public void Raise_HandlerExist_HandlerExecuted()
-        {
+        {          
             var executionCount = 0;
             EventHandledBySingleHandler.OnHandleAction = () => executionCount++;
 
@@ -108,6 +109,22 @@ namespace ReallySimpleEventing.Test.Unit
             var ex = Assert.Throws<Exception>(() => _eventStream.Raise(new EventWhereHandlerThrowsOnError()));
 
             Assert.That(ex.Message, Is.EqualTo(initialException.Message));
+        }
+
+        [Test]
+        public void Raise_HandlerExplicitlyThrowsOnError_UnhandledErrorHandlerGetsInvoked()
+        {
+            var globalErrorHandlerCalled = false;
+            ReallySimpleEventing.WhenErrorsAreNotHandled = (o, exception) => { globalErrorHandlerCalled = true; };
+            _eventStream = (EventStream)ReallySimpleEventing.CreateEventStream();
+
+            var initialException = new Exception("initial exception");
+            DelegatedHandler.OnHandleAction = () => { throw initialException; };
+            DelegatedHandler.OnErrorAction = e => { throw e; };
+
+            _eventStream.Raise(new EventWhereHandlerThrowsOnError());
+
+            Assert.That(globalErrorHandlerCalled, Is.True);
         }
 
         [Test]

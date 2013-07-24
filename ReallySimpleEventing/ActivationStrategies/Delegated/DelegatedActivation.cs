@@ -10,9 +10,18 @@ namespace ReallySimpleEventing.ActivationStrategies.Delegated
         {
         }
 
-        public DelegatedActivation(IEventHandlerResolver eventHandlerResolver,
-                                                Func<Type, object> createHandler)
-            : base(eventHandlerResolver, createHandler)
+        public DelegatedActivation(Func<Type, object> createHandler, Func<Type, object> createHandlerAsync)
+            : base(createHandler, createHandlerAsync)
+        {
+        }
+
+        public DelegatedActivation(IEventHandlerResolver eventHandlerResolver, Func<Type, object> createHandler)
+            : base(eventHandlerResolver, createHandler, createHandler)
+        {
+        }
+
+        public DelegatedActivation(IEventHandlerResolver eventHandlerResolver, Func<Type, object> createHandler, Func<Type, object> createHandlerAsync)
+            : base(eventHandlerResolver, createHandler, createHandlerAsync)
         {
         }
     }

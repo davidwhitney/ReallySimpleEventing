@@ -106,6 +106,10 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Composed
             {
                 return ShouldFindItems ? new[] { new SomeMessageHandlerA<TEventType>() } : Enumerable.Empty<IHandle<TEventType>>();
             }
+
+            public void OnHandlerExecuted<TEventType>(IHandle<TEventType> handler)
+            {
+            }
         }
 
         private class HandlerActivationStrategyB : IHandlerActivationStrategy
@@ -115,6 +119,10 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Composed
             public IEnumerable<IHandle<TEventType>> GetHandlers<TEventType>()
             {
                 return ShouldFindItems ? new[] { new SomeMessageHandlerB<TEventType>() } : Enumerable.Empty<IHandle<TEventType>>();
+            }
+
+            public void OnHandlerExecuted<TEventType>(IHandle<TEventType> handler)
+            {
             }
         }
         private class SomeMessageHandlerB<T> : IHandle<T>

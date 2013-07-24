@@ -46,5 +46,30 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
             public void Handle(SomeMessage @event){}
             public void OnError(SomeMessage @event, Exception ex){}
         }
+
+        [Test]
+        public void WhenHandlerIsAsyncDelegatedActivationShouldCallTheAsyncDelegateWithTheCorrectType()
+        {
+            var resolver = new EventHandlerResolver(() => new[] { typeof(SomeAsyncMessageHandler) });
+            var asyncCalled = false;
+            Func<Type, IHandle<SomeAsyncMessage>> handler = t => new SomeAsyncMessageHandler();
+            Func<Type, IHandle<SomeAsyncMessage>> handlerAsync = t =>
+            {
+                asyncCalled = true;
+                return new SomeAsyncMessageHandler();
+            };
+
+            var activator = new DelegatedActivationWithDiscovery(resolver, handler, handlerAsync);
+            activator.GetHandlers<SomeAsyncMessage>().ToList();
+
+            Assert.That(asyncCalled, Is.True);
+        }
+        
+        private class SomeAsyncMessage{}
+        private class SomeAsyncMessageHandler : IHandleAsync<SomeAsyncMessage>
+        {
+            public void Handle(SomeAsyncMessage @event) { }
+            public void OnError(SomeAsyncMessage @event, Exception ex) { }
+        }
     }
 }

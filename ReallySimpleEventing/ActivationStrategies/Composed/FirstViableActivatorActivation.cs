@@ -29,5 +29,9 @@ namespace ReallySimpleEventing.ActivationStrategies.Composed
 
             return fallback;
         }
+
+        public virtual void OnHandlerExecuted<TEventType>(IHandle<TEventType> handler)
+        {
+        }
     }
 }

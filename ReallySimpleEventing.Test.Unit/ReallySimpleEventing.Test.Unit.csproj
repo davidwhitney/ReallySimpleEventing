@@ -52,7 +52,7 @@
     <Compile Include="ActivationStrategies\Composed\FirstViableActivatorActivatorTests.cs" />
     <Compile Include="ActivationStrategies\Delegated\DelegatedActivationTests.cs" />
     <Compile Include="ActivationStrategies\Delegated\DelegatedActivationWithoutDiscoveryTests.cs" />
-    <Compile Include="EventsTests.cs" />
+    <Compile Include="EventStreamTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHandler.cs" />
     <Compile Include="TestThreadStrategy.cs" />
