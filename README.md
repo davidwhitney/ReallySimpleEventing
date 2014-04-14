@@ -1,7 +1,5 @@
-ReallySimpleEventing
+ReallySimpleEventing [![Build status](https://ci.appveyor.com/api/projects/status/2m6ghnxiefdegn7u)](https://ci.appveyor.com/project/DavidWhitney/reallysimpleeventing)
 ====================
-
-[![Build status](https://ci.appveyor.com/api/projects/status?id=2m6ghnxiefdegn7u)](https://ci.appveyor.com/project/reallysimpleeventing)
 
 * Intro
 * Why Do I Need It?
