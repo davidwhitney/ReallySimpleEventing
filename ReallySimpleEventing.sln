@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing", "ReallySimpleEventing\ReallySimpleEventing.csproj", "{B46083EB-4F31-4325-BB11-0CCC89187FD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.Test.Unit", "ReallySimpleEventing.Test.Unit\ReallySimpleEventing.Test.Unit.csproj", "{648B8A02-BE0F-42D7-878C-A07108E56F72}"
@@ -14,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BAEC18
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.Net40", "ReallySimpleEventing.Net40\ReallySimpleEventing.Net40.csproj", "{D11DA846-04A4-4912-8572-154B3A3D1CCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.MessageBus.Azure", "ReallySimpleEventing.MessageBus.Azure\ReallySimpleEventing.MessageBus.Azure.csproj", "{27D31C19-7B6C-453E-A56D-C75935A1B1F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReallySimpleEventing.MessageBus.Azure.Test.Unit", "ReallySimpleEventing.MessageBus.Azure.Test.Unit\ReallySimpleEventing.MessageBus.Azure.Test.Unit.csproj", "{CACA4EC6-FF9F-4BF2-8E4C-607DCE9AAD61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,14 @@ Global
 		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D11DA846-04A4-4912-8572-154B3A3D1CCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27D31C19-7B6C-453E-A56D-C75935A1B1F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D31C19-7B6C-453E-A56D-C75935A1B1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D31C19-7B6C-453E-A56D-C75935A1B1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D31C19-7B6C-453E-A56D-C75935A1B1F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CACA4EC6-FF9F-4BF2-8E4C-607DCE9AAD61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CACA4EC6-FF9F-4BF2-8E4C-607DCE9AAD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CACA4EC6-FF9F-4BF2-8E4C-607DCE9AAD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CACA4EC6-FF9F-4BF2-8E4C-607DCE9AAD61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
