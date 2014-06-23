@@ -133,7 +133,7 @@ namespace ReallySimpleEventing.Test.Unit
             var strategyToSkip = new TestThreadStrategy(false);
             var strategyToSelect = new TestThreadStrategy(true);
             var threadStrategies = new List<IHandlerThreadingStrategy> {strategyToSkip, strategyToSelect};
-            var stream = new EventStream(new ActivatorActivation(), threadStrategies);
+            var stream = new EventStream(new ReallySimpleEventingConfiguration {ThreadingStrategies = threadStrategies});
 
             stream.Raise(new EventHandledBySingle());
 
@@ -145,8 +145,8 @@ namespace ReallySimpleEventing.Test.Unit
         {
             var firstMatch = new TestThreadStrategy(true);
             var secondMatch = new TestThreadStrategy(true);
-            var threadStrategies = new List<IHandlerThreadingStrategy> {firstMatch, secondMatch};
-            var stream = new EventStream(new ActivatorActivation(), threadStrategies);
+            var threadStrategies = new List<IHandlerThreadingStrategy> { firstMatch, secondMatch };
+            var stream = new EventStream(new ReallySimpleEventingConfiguration { ThreadingStrategies = threadStrategies });
 
             stream.Raise(new EventHandledBySingle());
 
