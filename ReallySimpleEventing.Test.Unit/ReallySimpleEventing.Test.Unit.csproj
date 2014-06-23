@@ -54,6 +54,8 @@
     <Compile Include="ActivationStrategies\Delegated\DelegatedActivationWithoutDiscoveryTests.cs" />
     <Compile Include="EventStreamTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReallySimpleEventingConfigurationTests.cs" />
+    <Compile Include="ReallySimpleEventingTests.cs" />
     <Compile Include="TestHandler.cs" />
     <Compile Include="TestThreadStrategy.cs" />
     <Compile Include="ThreadingStrategies\CurrentThreadTests.cs" />

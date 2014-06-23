@@ -22,7 +22,7 @@ namespace ReallySimpleEventing
             };
         }
 
-        public static void WithExtension(IReallySimpleEventingRegistrationModule registrationModule)
+        public static void RegisterModule(IReallySimpleEventingRegistrationModule registrationModule)
         {
             registrationModule.Bootstrap(Configuration);
         }
