@@ -48,6 +48,8 @@
     <Compile Include="ActivationStrategies\Composed\FirstViableActivatorActivation.cs" />
     <Compile Include="ActivationStrategies\IHandlerActivationStrategy.cs" />
     <Compile Include="EventHandling\IHandleAsync.cs" />
+    <Compile Include="EventHandling\ISubscribeTo.cs" />
+    <Compile Include="ThreadingStrategies\NullMessageBusPublishingStrategy.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ThreadingStrategies\TaskOfT.cs" />
     <Compile Include="IEventStream.cs" />

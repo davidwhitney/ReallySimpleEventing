@@ -71,5 +71,30 @@ namespace ReallySimpleEventing.Test.Unit.ActivationStrategies.Delegated
             public void Handle(SomeAsyncMessage @event) { }
             public void OnError(SomeAsyncMessage @event, Exception ex) { }
         }
+
+        [Test]
+        public void WhenHandlerIsSubscription_ReturnsAsyncHandlerForPublishingMessages()
+        {
+            var resolver = new EventHandlerResolver(() => new[] { typeof(SomePubSubMessageHandler) });
+            var asyncCalled = false;
+            Func<Type, IHandle<SomePubSubMessage>> handler = t => new SomePubSubMessageHandler();
+            Func<Type, IHandle<SomePubSubMessage>> handlerAsync = t =>
+            {
+                asyncCalled = true;
+                return new SomePubSubMessageHandler();
+            };
+
+            var activator = new DelegatedActivationWithDiscovery(resolver, handler, handlerAsync);
+            activator.GetHandlers<SomePubSubMessage>().ToList();
+
+            Assert.That(asyncCalled, Is.True);
+        }
+        
+        private class SomePubSubMessage{}
+        private class SomePubSubMessageHandler : ISubscribeTo<SomePubSubMessage>
+        {
+            public void Handle(SomePubSubMessage @event) { }
+            public void OnError(SomePubSubMessage @event, Exception ex) { }
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace ReallySimpleEventing
             ActivationStrategy = new ActivatorActivation();
             ThreadingStrategies = new List<IHandlerThreadingStrategy> // Order is important for selection
                 {
+                    new NullMessageBusPublishingStrategy(),
                     new TaskOfT(),
                     new CurrentThread() // Default
                 };
