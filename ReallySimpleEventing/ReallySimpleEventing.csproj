@@ -51,6 +51,7 @@
     <Compile Include="EventHandling\ISubscribeTo.cs" />
     <Compile Include="IReallySimpleEventingRegistrationModule.cs" />
     <Compile Include="ReallySimpleEventingConfiguration.cs" />
+    <Compile Include="ReallySimpleEventingWorker.cs" />
     <Compile Include="ThreadingStrategies\NullMessageBusPublishingStrategy.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ThreadingStrategies\TaskOfT.cs" />

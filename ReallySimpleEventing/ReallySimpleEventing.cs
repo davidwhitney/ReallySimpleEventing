@@ -7,50 +7,48 @@ namespace ReallySimpleEventing
 {
     public class ReallySimpleEventing
     {
-        public static ReallySimpleEventingConfiguration Configuration { get; set; }
+        private static readonly ReallySimpleEventingWorker Instance;
         
         static ReallySimpleEventing()
         {
-            Configuration = new ReallySimpleEventingConfiguration
-            {
-                ThreadingStrategies = new List<IHandlerThreadingStrategy> // Order is important for selection
-                {
-                    new NullMessageBusPublishingStrategy(),
-                    new TaskOfT(),
-                    new CurrentThread() // Default
-                }
-            };
+            Instance = new ReallySimpleEventingWorker();
         }
 
         public static void RegisterModule(IReallySimpleEventingRegistrationModule registrationModule)
         {
-            registrationModule.Bootstrap(Configuration);
+            Instance.RegisterModule(registrationModule);
         }
 
         public static IEventStream CreateEventStream()
         {
-            return new EventStream(Configuration); 
+            return Instance.CreateEventStream();
+        }
+
+        public static ReallySimpleEventingConfiguration Configuration
+        {
+            get { return Instance.Configuration; }
+            set { Instance.Configuration = value; }
         }
 
         [Obsolete("Please move to using ReallySimpleEventing.Configuration.ActivationStrategy")]
         public static IHandlerActivationStrategy ActivationStrategy 
         {
-            get { return Configuration.ActivationStrategy; }
-            set { Configuration.ActivationStrategy = value; } 
+            get { return Instance.Configuration.ActivationStrategy; }
+            set { Instance.Configuration.ActivationStrategy = value; } 
         }
 
         [Obsolete("Please move to using ReallySimpleEventing.Configuration.ThreadingStrategies")]
         public static List<IHandlerThreadingStrategy> ThreadingStrategies
         {
-            get { return Configuration.ThreadingStrategies; }
-            set { Configuration.ThreadingStrategies = value; }
+            get { return Instance.Configuration.ThreadingStrategies; }
+            set { Instance.Configuration.ThreadingStrategies = value; }
         }
 
         [Obsolete("Please move to using ReallySimpleEventing.Configuration.WhenErrorsAreNotHandled")]
         public static Action<object, Exception> WhenErrorsAreNotHandled
         {
-            get { return Configuration.WhenErrorsAreNotHandled; }
-            set { Configuration.WhenErrorsAreNotHandled = value; }
+            get { return Instance.Configuration.WhenErrorsAreNotHandled; }
+            set { Instance.Configuration.WhenErrorsAreNotHandled = value; }
         }
     }
 }

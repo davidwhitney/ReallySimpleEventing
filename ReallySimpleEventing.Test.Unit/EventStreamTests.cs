@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
-using ReallySimpleEventing.ActivationStrategies.Activator;
 using ReallySimpleEventing.ThreadingStrategies;
 
 namespace ReallySimpleEventing.Test.Unit
@@ -12,12 +11,16 @@ namespace ReallySimpleEventing.Test.Unit
     public class EventStreamTests
     {
         private EventStream _eventStream;
+        private ReallySimpleEventingWorker _rse;
 
         [SetUp]
         public void SetUp()
         {
-            ReallySimpleEventing.WhenErrorsAreNotHandled = (o, exception) => { throw exception; };
-            _eventStream = (EventStream)ReallySimpleEventing.CreateEventStream();
+            _rse = new ReallySimpleEventingWorker
+            {
+                Configuration = {WhenErrorsAreNotHandled = (o, exception) => { throw exception; }}
+            };
+            _eventStream = (EventStream)_rse.CreateEventStream();
         }
 
         public class EventHandledBySingle {}
@@ -115,8 +118,8 @@ namespace ReallySimpleEventing.Test.Unit
         public void Raise_HandlerExplicitlyThrowsOnError_UnhandledErrorHandlerGetsInvoked()
         {
             var globalErrorHandlerCalled = false;
-            ReallySimpleEventing.WhenErrorsAreNotHandled = (o, exception) => { globalErrorHandlerCalled = true; };
-            _eventStream = (EventStream)ReallySimpleEventing.CreateEventStream();
+            _rse.Configuration.WhenErrorsAreNotHandled = (o, exception) => { globalErrorHandlerCalled = true; };
+            _eventStream = (EventStream)_rse.CreateEventStream();
 
             var initialException = new Exception("initial exception");
             DelegatedHandler.OnHandleAction = () => { throw initialException; };
