@@ -53,7 +53,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
 
             _plugin.Bootstrap(_cfg);
 
-            _mockTopicCreator.Verify(x=>x.CreateTopic("ReallySimpleEventing.MulticastMessage"));
+            _mockTopicCreator.Verify(x=>x.CreateTopic("MulticastMessage"));
         }
 
         public class MulticastMessage { }

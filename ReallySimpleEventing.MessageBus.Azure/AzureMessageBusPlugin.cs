@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ReallySimpleEventing.ActivationStrategies;
+using ReallySimpleEventing.EventHandling;
 using ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping;
 using ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies;
 using ReallySimpleEventing.ThreadingStrategies;
@@ -43,7 +44,7 @@ namespace ReallySimpleEventing.MessageBus.Azure
             {
                 foreach (var pair in messageToHandlerMap)
                 {
-                    _topicCreator.CreateTopic("ReallySimpleEventing." + pair.Key.Name);
+                    _topicCreator.CreateTopic(pair.Key.Name);
                 }
             }
         }
@@ -59,7 +60,10 @@ namespace ReallySimpleEventing.MessageBus.Azure
             var messageToHandlers = new Dictionary<Type, Type>();
             foreach (var subscriptionHandler in subscriptionHandlers)
             {
-                var subscriptionInterface = subscriptionHandler.GetInterfaces().Single(x => x.Name.StartsWith("ISubscribeTo"));
+                var subscriptionInterface =
+                    subscriptionHandler.GetInterfaces()
+                        .Single(x => x.GetGenericTypeDefinition() == typeof (ISubscribeTo<>));
+
                 var messageType = subscriptionInterface.GetGenericArguments()[0];
                 messageToHandlers.Add(messageType, subscriptionHandler);
             }
