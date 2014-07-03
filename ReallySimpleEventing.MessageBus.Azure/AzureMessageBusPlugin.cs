@@ -16,7 +16,7 @@ namespace ReallySimpleEventing.MessageBus.Azure
         private readonly IAzureTopicCreator _topicCreator;
 
         public AzureMessageBusPlugin(RseAzureServiceBusConfiguration busConfiguration) 
-            : this (busConfiguration, new EventHandlerResolver(), new AzureTopicCreator())
+            : this (busConfiguration, new EventHandlerResolver(), new AzureTopicCreator(busConfiguration))
         {
         }
 

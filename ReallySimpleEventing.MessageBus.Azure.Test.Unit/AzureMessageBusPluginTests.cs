@@ -22,7 +22,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
         [SetUp]
         public void SetUp()
         {
-            _busConfig = new RseAzureServiceBusConfiguration();
+            _busConfig = new RseAzureServiceBusConfiguration("ns");
             _cfg = new ReallySimpleEventingConfiguration();
             _mockTopicCreator = new Mock<IAzureTopicCreator>();
             _plugin = new AzureMessageBusPlugin(_busConfig, new EventHandlerResolver(), _mockTopicCreator.Object);
