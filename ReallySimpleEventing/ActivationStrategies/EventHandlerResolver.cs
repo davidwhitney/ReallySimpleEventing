@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using ReallySimpleEventing.EventHandling;
 
 namespace ReallySimpleEventing.ActivationStrategies
 {
@@ -10,7 +11,8 @@ namespace ReallySimpleEventing.ActivationStrategies
         private readonly Lazy<IEnumerable<Type>> _allHandlers;
         private readonly ConcurrentDictionary<Type, List<Type>> _cache;
 
-        public EventHandlerResolver() : this(FindAllHandlersInAppDomain)
+        public EventHandlerResolver()
+            : this(FindAllHandlersInAppDomain)
         {
         }
 
@@ -25,6 +27,17 @@ namespace ReallySimpleEventing.ActivationStrategies
             return _cache.GetOrAdd(eventType, unused =>
                                               _allHandlers.Value.Where(
                                                   handlerType => handlerType.IsAMessageHandlerFor(eventType)).ToList());
+        }
+
+        public IEnumerable<Type> GetAllSubscriptionHandlers()
+        {
+            var messagesWithDistributedSubscriptions = _allHandlers.Value.Where(handler => handler.GetInterfaces().Where(IsASubscriber).Any()).ToList();
+            return messagesWithDistributedSubscriptions;
+        }
+
+        public static bool IsASubscriber(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ISubscribeTo<>);
         }
 
         private static List<Type> FindAllHandlersInAppDomain()

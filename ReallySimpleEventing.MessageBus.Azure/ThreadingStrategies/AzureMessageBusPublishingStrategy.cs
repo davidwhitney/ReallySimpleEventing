@@ -2,7 +2,7 @@
 using ReallySimpleEventing.EventHandling;
 using ReallySimpleEventing.ThreadingStrategies;
 
-namespace ReallySimpleEventing.MessageBus.Azure
+namespace ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies
 {
     public class AzureMessageBusPublishingStrategy : IHandlerThreadingStrategy
     {

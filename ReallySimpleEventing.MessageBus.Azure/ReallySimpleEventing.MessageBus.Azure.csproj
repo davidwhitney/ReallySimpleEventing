@@ -50,8 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureMessageBusPlugin.cs" />
-    <Compile Include="AzureMessageBusPublishingStrategy.cs" />
+    <Compile Include="ThreadingStrategies\AzureMessageBusPublishingStrategy.cs" />
+    <Compile Include="AzureBootstrapping\AzureTopicCreator.cs" />
+    <Compile Include="AzureBootstrapping\IAzureTopicCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RseAzureServiceBusConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
