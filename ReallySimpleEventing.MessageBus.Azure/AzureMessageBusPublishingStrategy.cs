@@ -13,7 +13,7 @@ namespace ReallySimpleEventing.MessageBus.Azure
 
         public void Run(Action operation)
         {
-            throw new NotImplementedException("You published a message with an ISubscribeTo handler present - this type is designed to handle messages over message buses but you haven't configured one.");
+            throw new NotImplementedException();
         }
     }
 }
