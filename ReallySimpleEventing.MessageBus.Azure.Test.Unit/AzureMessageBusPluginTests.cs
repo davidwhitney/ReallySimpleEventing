@@ -14,13 +14,13 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
     {
         private ReallySimpleEventingConfiguration _cfg;
         private AzureMessageBusPlugin _plugin;
-        private RseAzureServiceBusConfiguration _busConfig;
+        private AzureServiceBusConfiguration _busConfig;
         private Mock<ITopicCreator> _mockTopicCreator;
 
         [SetUp]
         public void SetUp()
         {
-            _busConfig = new RseAzureServiceBusConfiguration("ns");
+            _busConfig = new AzureServiceBusConfiguration("ns");
             _cfg = new ReallySimpleEventingConfiguration();
             _mockTopicCreator = new Mock<ITopicCreator>();
             _plugin = new AzureMessageBusPlugin(_busConfig, new EventHandlerResolver(), _mockTopicCreator.Object);

@@ -3,12 +3,12 @@ using Microsoft.ServiceBus.Messaging;
 
 namespace ReallySimpleEventing.MessageBus.Azure
 {
-    public class AzureTopicCreator : IAzureTopicCreator
+    public class AzureTopicCreator : ITopicCreator
     {
-        private readonly RseAzureServiceBusConfiguration _config;
+        private readonly AzureServiceBusConfiguration _config;
         private readonly NamespaceManager _namespaceManager;
 
-        public AzureTopicCreator(RseAzureServiceBusConfiguration config)
+        public AzureTopicCreator(AzureServiceBusConfiguration config)
         {
             _config = config;
             var settings = new NamespaceManagerSettings

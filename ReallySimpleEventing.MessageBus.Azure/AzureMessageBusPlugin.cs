@@ -2,14 +2,14 @@
 
 namespace ReallySimpleEventing.MessageBus.Azure
 {
-    public class AzureMessageBusPlugin : MessageBusPlugin<RseAzureServiceBusConfiguration>
+    public class AzureMessageBusPlugin : MessageBusPlugin<AzureServiceBusConfiguration>
     {
-        public AzureMessageBusPlugin(RseAzureServiceBusConfiguration busConfiguration, ITopicCreator topicCreator) 
+        public AzureMessageBusPlugin(AzureServiceBusConfiguration busConfiguration, ITopicCreator topicCreator) 
             : base(busConfiguration, topicCreator, new AzurePublisher())
         {
         }
 
-        public AzureMessageBusPlugin(RseAzureServiceBusConfiguration busConfiguration, IEventHandlerResolver resolver, ITopicCreator topicCreator)
+        public AzureMessageBusPlugin(AzureServiceBusConfiguration busConfiguration, IEventHandlerResolver resolver, ITopicCreator topicCreator)
             : base(busConfiguration, resolver, topicCreator, new AzurePublisher())
         {
         }
