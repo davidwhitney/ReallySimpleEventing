@@ -55,6 +55,7 @@
     <Compile Include="AzureMessageBusPluginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RseAzureServiceBusConfigurationTests.cs" />
+    <Compile Include="ThreadingStrategies\AzureMessageBusPublishingThreadingStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

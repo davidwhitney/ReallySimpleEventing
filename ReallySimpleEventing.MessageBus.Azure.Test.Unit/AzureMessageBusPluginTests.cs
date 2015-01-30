@@ -30,6 +30,14 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
         }
 
         [Test]
+        public void Bootstrap_ActivationStrategyReplaced()
+        {
+            _plugin.Bootstrap(_cfg);
+
+            Assert.That(_cfg.ActivationStrategy, Is.TypeOf<InterceptedHandlerActivationStrategy>());
+        }
+
+        [Test]
         public void Bootstrap_GivenConfiguration_AddsMessageBusHandlingStrategy()
         {
             _plugin.Bootstrap(_cfg);
@@ -54,6 +62,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
 
             _plugin.Bootstrap(_cfg);
 
+           
             _mockTopicCreator.Verify(x=>x.CreateTopic("MulticastMessage"));
         }
 
