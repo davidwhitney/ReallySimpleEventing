@@ -1,7 +1,7 @@
 ﻿using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
-namespace ReallySimpleEventing.MessageBus.Azure.AzureAdapter
+namespace ReallySimpleEventing.MessageBus.Azure
 {
     public class AzureTopicCreator : IAzureTopicCreator
     {

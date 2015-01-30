@@ -1,9 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using ReallySimpleEventing.EventHandling;
-using ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies;
 
-namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ThreadingStrategies
+namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
 {
     [TestFixture]
     public class AzureMessageBusPublishingThreadingStrategyTests
@@ -11,7 +10,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ThreadingStrategies
         [Test]
         public void Supports_SynchronousHandler_ReturnsFalse()
         {
-            var strategy = new AzureMessageBusPublishingThreadingStrategy();
+            var strategy = new MessageBusPublishingThreadingStrategy();
 
             var supported = strategy.Supports(new SyncHandler());
 
@@ -21,7 +20,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ThreadingStrategies
         [Test]
         public void Supports_AsynchronousHandler_ReturnsFalse()
         {
-            var strategy = new AzureMessageBusPublishingThreadingStrategy();
+            var strategy = new MessageBusPublishingThreadingStrategy();
 
             var supported = strategy.Supports(new AsyncHandler());
 
@@ -31,7 +30,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ThreadingStrategies
         [Test]
         public void Supports_SubscriptionHandler_ReturnsTrue()
         {
-            var strategy = new AzureMessageBusPublishingThreadingStrategy();
+            var strategy = new MessageBusPublishingThreadingStrategy();
 
             var supported = strategy.Supports(new SubscriptionHandler());
 

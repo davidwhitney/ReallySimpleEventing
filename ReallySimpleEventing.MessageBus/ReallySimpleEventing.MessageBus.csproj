@@ -4,16 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CACA4EC6-FF9F-4BF2-8E4C-607DCE9AAD61}</ProjectGuid>
+    <ProjectGuid>{EF146930-37A1-496E-9720-5625F07124C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReallySimpleEventing.MessageBus.Azure.Test.Unit</RootNamespace>
-    <AssemblyName>ReallySimpleEventing.MessageBus.Azure.Test.Unit</AssemblyName>
+    <RootNamespace>ReallySimpleEventing.MessageBus</RootNamespace>
+    <AssemblyName>ReallySimpleEventing.MessageBus</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,15 +28,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,36 +39,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureMessageBusPluginTests.cs" />
+    <Compile Include="PublishingHandler.cs" />
+    <Compile Include="InterceptedHandlerActivationStrategy.cs" />
+    <Compile Include="IMessageBusConfiguration.cs" />
+    <Compile Include="ITopicCreator.cs" />
+    <Compile Include="MessageBusPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RseAzureServiceBusConfigurationTests.cs" />
-    <Compile Include="AzureMessageBusPublishingThreadingStrategyTests.cs" />
+    <Compile Include="MessageBusPublishingThreadingStrategy.cs" />
+    <Compile Include="IPublishToMessageBuses.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReallySimpleEventing.MessageBus.Azure\ReallySimpleEventing.MessageBus.Azure.csproj">
-      <Project>{27d31c19-7b6c-453e-a56d-c75935a1b1f3}</Project>
-      <Name>ReallySimpleEventing.MessageBus.Azure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReallySimpleEventing.MessageBus\ReallySimpleEventing.MessageBus.csproj">
-      <Project>{EF146930-37A1-496E-9720-5625F07124C5}</Project>
-      <Name>ReallySimpleEventing.MessageBus</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ReallySimpleEventing\ReallySimpleEventing.csproj">
-      <Project>{b46083eb-4f31-4325-bb11-0ccc89187fd0}</Project>
+      <Project>{B46083EB-4F31-4325-BB11-0CCC89187FD0}</Project>
       <Name>ReallySimpleEventing</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

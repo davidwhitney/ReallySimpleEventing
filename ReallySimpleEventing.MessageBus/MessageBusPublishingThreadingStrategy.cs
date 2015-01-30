@@ -1,9 +1,9 @@
 using ReallySimpleEventing.EventHandling;
 using ReallySimpleEventing.ThreadingStrategies;
 
-namespace ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies
+namespace ReallySimpleEventing.MessageBus
 {
-    public class AzureMessageBusPublishingThreadingStrategy : TaskOfT
+    public class MessageBusPublishingThreadingStrategy : TaskOfT
     {
         public new bool Supports<TEventType>(IHandle<TEventType> handler)
         {

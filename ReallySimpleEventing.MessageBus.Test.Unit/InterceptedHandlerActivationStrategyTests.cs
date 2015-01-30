@@ -3,10 +3,8 @@ using System.Linq;
 using NUnit.Framework;
 using ReallySimpleEventing.ActivationStrategies.Activator;
 using ReallySimpleEventing.EventHandling;
-using ReallySimpleEventing.MessageBus.Azure.ActivationStrategies;
-using ReallySimpleEventing.MessageBus.Azure.EventHandling;
 
-namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ActivationStrategies
+namespace ReallySimpleEventing.MessageBus.Test.Unit
 {
     [TestFixture]
     public class InterceptedHandlerActivationStrategyTests
@@ -14,7 +12,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ActivationStrategies
         [Test]
         public void GetHandlers_WhenASubscriptionIsPresent_TwoHandlersReturned()
         {
-            var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation());
+            var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation(), new FakePublisher());
 
             var handlers = interceptedStrat.GetHandlers<MulticastMessage>();
 
@@ -24,11 +22,11 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ActivationStrategies
         [Test]
         public void GetHandlers_WhenASubscriptionIsPresent_MutlicastingHandlerReturned()
         {
-            var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation());
+            var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation(), new FakePublisher());
 
             var handlers = interceptedStrat.GetHandlers<MulticastMessage>();
 
-            Assert.That(handlers.Count(x=>x.GetType() == typeof(AzureMessageBusPublishingHandler<MulticastMessage>)), Is.EqualTo(1));
+            Assert.That(handlers.Count(x => x.GetType() == typeof(PublishingHandler<MulticastMessage>)), Is.EqualTo(1));
         }
 
         public class MulticastMessage { }
@@ -41,11 +39,11 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ActivationStrategies
         [Test]
         public void GetHandlers_MultipleSubscriptionsPresent_OnlyOneAzureBusPublisherAdded()
         {
-            var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation());
+            var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation(), new FakePublisher());
 
             var handlers = interceptedStrat.GetHandlers<MulticastMessageWithManySubscriptions>();
 
-            Assert.That(handlers.Count(x => x.GetType() == typeof(AzureMessageBusPublishingHandler<MulticastMessageWithManySubscriptions>)), Is.EqualTo(1));
+            Assert.That(handlers.Count(x => x.GetType() == typeof(PublishingHandler<MulticastMessageWithManySubscriptions>)), Is.EqualTo(1));
         }
 
         public class MulticastMessageWithManySubscriptions { }
@@ -61,5 +59,12 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ActivationStrategies
         }
 
     }
-
+    
+    public class FakePublisher : IPublishToMessageBuses
+    {
+        public void Publish(object @event)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

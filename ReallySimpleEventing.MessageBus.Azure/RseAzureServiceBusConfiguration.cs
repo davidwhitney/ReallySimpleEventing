@@ -2,7 +2,7 @@
 
 namespace ReallySimpleEventing.MessageBus.Azure
 {
-    public class RseAzureServiceBusConfiguration
+    public class RseAzureServiceBusConfiguration : IMessageBusConfiguration
     {
         public bool AutoCreateTopics { get; set; }
         public TimeSpan DefaultMessageTimeToLive { get; set; }
