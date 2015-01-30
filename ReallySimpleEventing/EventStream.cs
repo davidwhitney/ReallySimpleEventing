@@ -2,7 +2,6 @@
 using System.Linq;
 using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
-using ReallySimpleEventing.ThreadingStrategies;
 
 namespace ReallySimpleEventing
 {
@@ -21,14 +20,11 @@ namespace ReallySimpleEventing
 
             foreach (var handler in handlers)
             {
-                var threadingStrategy = SelectExecutionContext(handler);
-                threadingStrategy.Run(() => SafelyHandle(handler, @event, _configuration.ActivationStrategy));
-            }
-        }
+                var threadingStrategy = _configuration.ThreadingStrategies.First(x => x.Supports(handler));
 
-        public IHandlerThreadingStrategy SelectExecutionContext<TEventType>(IHandle<TEventType> handler)
-        {
-            return _configuration.ThreadingStrategies.First(x => x.Supports(handler));
+                var thisHandler = handler;
+                threadingStrategy.Run(() => SafelyHandle(thisHandler, @event, _configuration.ActivationStrategy));
+            }
         }
 
         private void SafelyHandle<TEventType>(IHandle<TEventType> handler, TEventType @event, IHandlerActivationStrategy handlerActivation)

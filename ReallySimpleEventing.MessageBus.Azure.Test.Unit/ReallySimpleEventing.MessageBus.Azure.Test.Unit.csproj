@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivationStrategies\InterceptedHandlerActivationStrategyTests.cs" />
+    <Compile Include="AzureBootstrapping\AzureTopicCreatorTests.cs" />
     <Compile Include="AzureMessageBusPluginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RseAzureServiceBusConfigurationTests.cs" />

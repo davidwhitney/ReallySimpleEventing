@@ -8,7 +8,7 @@ namespace ReallySimpleEventing.ThreadingStrategies
     {
         public bool Supports<TEventType>(IHandle<TEventType> handler)
         {
-            return handler as IHandleAsync<TEventType> != null;
+            return handler is IHandleAsync<TEventType>;
         }
 
         public void Run(Action operation)

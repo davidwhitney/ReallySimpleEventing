@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
+using ReallySimpleEventing.MessageBus.Azure.ActivationStrategies;
 using ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping;
 using ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies;
 using ReallySimpleEventing.ThreadingStrategies;
@@ -30,7 +31,8 @@ namespace ReallySimpleEventing.MessageBus.Azure
         public void Bootstrap(ReallySimpleEventingConfiguration configuration)
         {
             configuration.ThreadingStrategies.RemoveAll(x => x is NullMessageBusPublishingStrategy);
-            configuration.ThreadingStrategies.Insert(0, new AzureMessageBusPublishingStrategy());
+            configuration.ThreadingStrategies.Insert(0, new AzureMessageBusPublishingThreadingStrategy());
+            configuration.ActivationStrategy = new InterceptedHandlerActivationStrategy(configuration.ActivationStrategy);
 
             var messageToHandlerMap = CreateMapOfMessagesToSubscriptionHandlers();
 

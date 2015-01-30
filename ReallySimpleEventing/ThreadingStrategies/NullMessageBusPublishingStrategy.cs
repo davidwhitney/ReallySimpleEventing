@@ -10,7 +10,7 @@ namespace ReallySimpleEventing.ThreadingStrategies
     {
         public bool Supports<TEventType>(IHandle<TEventType> handler)
         {
-            return handler as ISubscribeTo<TEventType> != null;
+            return handler is ISubscribeTo<TEventType>;
         }
 
         public void Run(Action operation)

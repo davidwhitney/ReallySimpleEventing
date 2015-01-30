@@ -13,7 +13,13 @@ namespace ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping
         public AzureTopicCreator(RseAzureServiceBusConfiguration config)
         {
             _config = config;
-            _namespaceManager = new NamespaceManager(_config.SubscriptionNamespace);
+            var settings = new NamespaceManagerSettings
+            {
+                //TokenProvider = new TokenProvider()
+            };
+            var nsm = new NamespaceManager("service-namespace", settings);
+
+            _namespaceManager = NamespaceManager.Create(); 
         }
 
         public void CreateTopic(string topicName)

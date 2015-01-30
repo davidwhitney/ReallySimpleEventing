@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
+using ReallySimpleEventing.MessageBus.Azure.ActivationStrategies;
 using ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping;
 using ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies;
 using ReallySimpleEventing.ThreadingStrategies;
@@ -33,7 +34,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit
         {
             _plugin.Bootstrap(_cfg);
 
-            Assert.That(_cfg.ThreadingStrategies.FirstOrDefault(x => x.GetType() == typeof (AzureMessageBusPublishingStrategy)), Is.Not.Null);
+            Assert.That(_cfg.ThreadingStrategies.FirstOrDefault(x => x.GetType() == typeof (AzureMessageBusPublishingThreadingStrategy)), Is.Not.Null);
         }
 
         [Test]
