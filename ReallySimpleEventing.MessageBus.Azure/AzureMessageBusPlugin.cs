@@ -40,26 +40,28 @@ namespace ReallySimpleEventing.MessageBus.Azure
             SubscribeToAllAvailableTopics(messageToHandlerMap);
         }
 
-        private void CreateAnyMissingTopics(IEnumerable<KeyValuePair<Type, Type>> messageToHandlerMap)
+        private void CreateAnyMissingTopics(IEnumerable<Type> messagesWithSubscriptions)
         {
-            if (_busConfiguration.AutoCreateTopics)
+            if (!_busConfiguration.AutoCreateTopics)
             {
-                foreach (var pair in messageToHandlerMap)
-                {
-                    _topicCreator.CreateTopic(pair.Key.Name);
-                }
+                return;
+            }
+
+            foreach (var messageType in messagesWithSubscriptions)
+            {
+                _topicCreator.CreateTopic(messageType.Name);
             }
         }
 
-        private void SubscribeToAllAvailableTopics(IEnumerable<KeyValuePair<Type, Type>> distributedMessageTypes)
+        private void SubscribeToAllAvailableTopics(IList<Type> distributedMessageTypes)
         {
         }
 
-        private IDictionary<Type, Type> CreateMapOfMessagesToSubscriptionHandlers()
+        private IList<Type> CreateMapOfMessagesToSubscriptionHandlers()
         {
             var subscriptionHandlers = _resolver.GetAllSubscriptionHandlers().ToList();
 
-            var messageToHandlers = new Dictionary<Type, Type>();
+            var messageToHandlers = new List<Type>();
             foreach (var subscriptionHandler in subscriptionHandlers)
             {
                 var subscriptionInterface =
@@ -67,7 +69,7 @@ namespace ReallySimpleEventing.MessageBus.Azure
                         .Single(x => x.GetGenericTypeDefinition() == typeof (ISubscribeTo<>));
 
                 var messageType = subscriptionInterface.GetGenericArguments()[0];
-                messageToHandlers.Add(messageType, subscriptionHandler);
+                messageToHandlers.Add(messageType);
             }
 
             return messageToHandlers;
