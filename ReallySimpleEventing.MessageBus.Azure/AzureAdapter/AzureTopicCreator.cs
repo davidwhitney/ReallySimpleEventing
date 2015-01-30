@@ -1,9 +1,7 @@
-﻿using System;
-using System.Reflection;
-using Microsoft.ServiceBus;
+﻿using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
-namespace ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping
+namespace ReallySimpleEventing.MessageBus.Azure.AzureAdapter
 {
     public class AzureTopicCreator : IAzureTopicCreator
     {

@@ -1,4 +1,4 @@
-﻿namespace ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping
+﻿namespace ReallySimpleEventing.MessageBus.Azure.AzureAdapter
 {
     public interface IAzureTopicCreator
     {

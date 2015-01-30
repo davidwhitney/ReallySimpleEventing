@@ -51,8 +51,8 @@
   <ItemGroup>
     <Compile Include="EventHandling\AzureMessageBusPublishingHandler.cs" />
     <Compile Include="AzureMessageBusPlugin.cs" />
-    <Compile Include="AzureBootstrapping\AzureTopicCreator.cs" />
-    <Compile Include="AzureBootstrapping\IAzureTopicCreator.cs" />
+    <Compile Include="AzureAdapter\AzureTopicCreator.cs" />
+    <Compile Include="AzureAdapter\IAzureTopicCreator.cs" />
     <Compile Include="ThreadingStrategies\AzureMessageBusPublishingThreadingStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RseAzureServiceBusConfiguration.cs" />

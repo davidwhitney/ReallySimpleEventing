@@ -6,7 +6,7 @@ using NUnit.Framework;
 using ReallySimpleEventing.ActivationStrategies;
 using ReallySimpleEventing.EventHandling;
 using ReallySimpleEventing.MessageBus.Azure.ActivationStrategies;
-using ReallySimpleEventing.MessageBus.Azure.AzureBootstrapping;
+using ReallySimpleEventing.MessageBus.Azure.AzureAdapter;
 using ReallySimpleEventing.MessageBus.Azure.ThreadingStrategies;
 using ReallySimpleEventing.ThreadingStrategies;
 
