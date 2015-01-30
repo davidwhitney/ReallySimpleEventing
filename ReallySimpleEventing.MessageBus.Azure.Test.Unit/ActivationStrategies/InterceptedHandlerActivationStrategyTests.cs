@@ -16,7 +16,7 @@ namespace ReallySimpleEventing.MessageBus.Azure.Test.Unit.ActivationStrategies
         {
             var interceptedStrat = new InterceptedHandlerActivationStrategy(new ActivatorActivation());
 
-            var handlers = interceptedStrat.GetHandlers<AzureMessageBusPluginTests.MulticastMessage>();
+            var handlers = interceptedStrat.GetHandlers<MulticastMessage>();
 
             Assert.That(handlers.Count(), Is.EqualTo(2));
         }
