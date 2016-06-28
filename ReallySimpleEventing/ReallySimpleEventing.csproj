@@ -47,6 +47,7 @@
     <Compile Include="ActivationStrategies\Delegated\DelegatedActivationWithoutDiscovery.cs" />
     <Compile Include="ActivationStrategies\Composed\FirstViableActivatorActivation.cs" />
     <Compile Include="ActivationStrategies\IHandlerActivationStrategy.cs" />
+    <Compile Include="AppDomainExtensions.Net4x.cs" />
     <Compile Include="EventHandling\IHandleAsync.cs" />
     <Compile Include="EventHandling\ISubscribeTo.cs" />
     <Compile Include="IReallySimpleEventingRegistrationModule.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="ActivationStrategies\EventHandlerResolver.cs" />
     <Compile Include="EventHandling\IHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeExtensions.Net4x.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

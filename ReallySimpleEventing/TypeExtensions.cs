@@ -10,7 +10,8 @@ namespace ReallySimpleEventing
 
         public static bool IsAMessageHandlerFor(this Type handlerType, Type messageType)
         {
-            var handlerInterfaces = handlerType.GetInterfaces().Where(i=>i.IsAMessageHandler());
+            var interfaces = handlerType.GetInterfaces();
+            var handlerInterfaces = interfaces.Where(i=>i.IsAMessageHandler());
 
             foreach (var handlerInterface in handlerInterfaces)
             {
@@ -26,7 +27,7 @@ namespace ReallySimpleEventing
 
         public static bool IsAMessageHandler(this Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == HandlerType;
+            return type.IsGenericType() && type.GetGenericTypeDefinition() == HandlerType;
         }
     }
 }

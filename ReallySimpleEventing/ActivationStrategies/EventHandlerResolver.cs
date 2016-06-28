@@ -37,13 +37,12 @@ namespace ReallySimpleEventing.ActivationStrategies
 
         public static bool IsASubscriber(Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ISubscribeTo<>);
+            return type.IsGenericType() && type.GetGenericTypeDefinition() == typeof(ISubscribeTo<>);
         }
 
         private static List<Type> FindAllHandlersInAppDomain()
         {
-            return (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-                    from type in assembly.GetTypes()
+            return (from type in AppDomain.CurrentDomain.GetAllTypes()
                     let interfaces = type.GetInterfaces()
                     where interfaces.Any(x => x.IsAMessageHandler())
                     select type).ToList();
